@@ -1,0 +1,83 @@
+<div class="row">
+  <div class="col-xs-2">
+    <button id="btn-menu">Main Menu</button>
+    <div id="menu-options">
+      <%= link_to 'Reports', id: 'btn-reports' %><br>
+      <%= link_to 'Newsboard', id: 'btn-newsboard' %><br>
+      <%= link_to 'About', id: 'btn-about' %><br>
+    </div>
+
+  </div>
+  <div class="col-xs-8">
+    REPORTS
+  </div>
+  <div class="col-xs-2">
+    <button id="btn-post">Create Post</button>
+    <div id="post-options">
+      <button id="btn-report">Report</button>
+      <button id="btn-petition">Petition</button>
+    </div>
+    <%= render 'reports/new' %>
+    <%= render 'petitions/new' %>
+  </div>
+</div>
+
+<div>
+  <% @posts.each do |post| %>
+    <% if post.class.name == "Report" %>
+      <div>
+        <%= post.write_up %><br>
+        <strong><%= post.name %>, <%= post.age %></strong>
+        <% @report_view = post %>
+        <div class="report-view">
+          <%= render 'reports/show' %>
+        </div>
+        <button id="btn-showreport">View</button>
+       <!--  <%= link_to 'View', report_path(post) %> -->
+      </div>
+    <% else %>
+      <div>
+        <%= post.write_up %><br>
+        <strong>Sign the Petition Here</strong>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+
+<script>
+$(document).ready(function(){
+  // $( "#toggle" ).toggle( "slide" );
+  $("#report-new").hide();
+  $("#petition-new").hide();
+  $("#post-options").hide();
+  $("#menu-options").hide();
+  $(".report-view").hide();
+
+  $("#btn-menu").click(function(){
+    $("#btn-menu").hide();
+    $("#report-new").hide();
+    $("#petition-new").hide();
+    $("#post-options").hide();
+    $("#btn-post").show('slide', {direction: 'right'}, 500);
+    $("#menu-options").show('slide', {direction: 'left'}, 500);
+  });
+
+  $("#btn-post").click(function(){
+    $("#btn-post").hide();
+    $("#menu-options").hide();
+    $("#btn-menu").show('slide', {direction: 'left'}, 500);
+    $("#post-options").show('slide', {direction: 'right'}, 500);
+  });
+
+  $("#btn-petition").click(function(){
+    $("#post-options").hide();
+    $("#petition-new").show('slide', {direction: 'right'}, 500);
+  });
+  $("#btn-report").click(function(){
+    $("#post-options").hide();
+    $("#report-new").show('slide', {direction: 'right'}, 500);
+  });
+
+});
+</script>

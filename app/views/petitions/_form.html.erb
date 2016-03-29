@@ -1,0 +1,25 @@
+<%= form_for(@petition) do |f| %>
+  <% if @petition.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@petition.errors.count, "error") %> prohibited this petition from being saved:</h2>
+
+      <ul>
+      <% @petition.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title, 'Petition to...' %><br>
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :write_up, 'Information' %><br>
+    <%= f.text_area :write_up %>
+  </div>
+  <div class="actions">
+    <%= f.submit 'Post' %>
+  </div>
+<% end %>
