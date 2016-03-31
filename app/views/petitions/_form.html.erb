@@ -13,11 +13,11 @@
 
   <div class="field">
     <%= f.label :title, 'Petition to...' %><br>
-    <%= f.text_field :title %>
+    <%= f.text_field :title, placeholder: 'Title...' %>
   </div>
   <div class="field">
     <%= f.label :write_up, 'Information' %><br>
-    <%= f.text_area :write_up %>
+    <%= f.text_area :write_up, placeholder: 'Type here...' %>
   </div>
   <div class="actions">
     <%= f.submit 'Post' %>

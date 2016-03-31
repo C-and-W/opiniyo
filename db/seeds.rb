@@ -7,10 +7,13 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 Report.create(write_up: 'I walk home after tutor at around 6 plus, and the streets look kind of sketchy. As in not much guards, and not much lights.', name: 'Phil Co', age: 16)
+Tag.create(name: 'Security', report_id: 1)
 Report.create(write_up: 'Some places are not well lit and there is also heavy traffic in the area.', name: 'Anika Gaw', age: 14);
+Tag.create(name: 'Security', report_id: 2)
+Tag.create(name: 'Traffic', report_id: 2)
 Petition.create(write_up: 'The lights along Jose Abad Santos are no longer working thus compromising the security of resi- dents, civilians, and pedestrians in the area during night time.', title: 'Get New Street Lights')
 Report.create(write_up: 'The roads are too crowded because of all the cars. Roads are also broken, and the sidewalks are filled with sari sari stores and vendors.', name: 'Ethan Tantuco', age: 17)
-Report.create(write_up: 'The roads are too crowded because of all the cars. Roads are also broken, and the sidewalks are filled with sari sari stores and vendors.', name: 'Ethan Tantuco', age: 17)
-Petition.create(write_up: 'The lights along Jose Abad Santos are no longer working thus compromising the security of resi- dents, civilians, and pedestrians in the area during night time.', title: 'Get New Street Lights')
-Petition.create(write_up: 'The lights along Jose Abad Santos are no longer working thus compromising the security of resi- dents, civilians, and pedestrians in the area during night time.', title: 'Get New Street Lights')
-Petition.create(write_up: 'The lights along Jose Abad Santos are no longer working thus compromising the security of resi- dents, civilians, and pedestrians in the area during night time.', title: 'Get New Street Lights')
+Tag.create(name: 'Traffic', report_id: 3)
+Tag.create(name: 'Roads', report_id: 3)
+Petition.create(write_up: 'Lorem ipsum Lorem.', title: 'Lorem')
+Petition.create(write_up: 'I love bacon', title: 'Bacon')

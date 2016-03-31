@@ -1,18 +1,5 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Title:</strong>
-  <%= @petition.title %>
-</p>
-
-<p>
-  <strong>Write up:</strong>
-  <%= @petition.write_up %>
-</p>
-
-<% @signature = Signature.new %>
 <%= form_for(@signature) do |f| %>
-
+  
   <div class="field">
     <%= f.label :name %><br>
     <%= f.text_field :name %>
@@ -26,10 +13,9 @@
     <%= f.text_field :email %>
   </div>
   <div class="field">
-    <%= f.label :petition_id %><br>
-    <%= f.number_field :petition_id %>
+    <%= f.hidden_field :petition_id %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit 'Sign'%>
   </div>
 <% end %>

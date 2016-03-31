@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  resources :petition_signatures
+  resources :comments
+  resources :signatures
   resources :post_comments
   resources :comment_posts
   resources :petitions
@@ -7,7 +8,7 @@ Rails.application.routes.draw do
   resources :reports
   root  'pages#index'
   get '/posts' => 'pages#posts', as: :posts
-
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

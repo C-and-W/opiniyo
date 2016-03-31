@@ -51,3 +51,10 @@
 #btn-menu, #btn-post{
    background-color: #FCB800;
 }
+
+.report-container:link, .report-container:hover, .report-container:active, .report-container:visited{
+   color: black;
+   display: block;
+   text-decoration: none;
+   background-color: white;
+}

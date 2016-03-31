@@ -22,36 +22,128 @@
   </div>
 </div>
 
+<form action="/posts">
+  <%= hidden_field_tag 'code', 'pie' %>
+  <input name="query" type="text">
+  <input type="submit" class="hidden">
+</form>
+
+<form action="/posts" style="width: 10vw;">
+  <%= hidden_field_tag 'code', 'pie' %>
+  <%= select_tag("sort", options_for_select([["All posts",'all'],["Reports only",'reports'],["Petitions only",'petitions']]), :prompt => "Sort posts...", :onchange => "this.form.submit()",:class=>"form-control") %>
+</form>
+
+
 <div>
   <% @posts.each do |post| %>
-    <% if post.class.name == "Report" %>
-      <div>
-        <%= post.write_up %><br>
-        <strong><%= post.name %>, <%= post.age %></strong>
-        <% @report_view = post %>
-        <div class="report-view">
-          <%= render 'reports/show' %>
+    <% if post.class.name == "Report" %> <!-- IF REPORT -->
+      <a href="#" class="report-container">
+        <div style="border: 5px solid black; margin-top: 10px;" id="btn-show-report<%= post.id %>" class="btn-show-report" onclick="show_report(this)">
+          <%= post.write_up %><br>
+          <% post.tags.each do |tag| %>
+            #<%= tag.name %> 
+          <% end %>
+          <% if post.tags.count > 0 %>
+            <br>
+          <% end %>
+          <strong><%= post.name %>, <%= post.age %></strong>
+
+          <!-- DIV FOR SLIDE OUT WHEN CLICKING REPORT -->
+
+          <div id="show-report<%= post.id %>" class="show-post"> 
+            <%= post.write_up %><br>
+            <% post.tags.each do |tag| %>
+              #<%= tag.name %> 
+            <% end %>
+            <% if post.tags.count > 0 %>
+              <br>
+            <% end %>
+            <strong><%= post.name %>, <%= post.age %></strong>
+          </div>
+
+          <!-- END DIV FOR SLIDE OUT WHEN CLICKING REPORT -->
+
         </div>
-       <!--  <%= link_to 'View', report_path(post) %> -->
-      </div>
-    <% else %>
-      <div>
-        <%= post.write_up %><br>
-        <strong>Sign the Petition Here</strong>
-      </div>
+      </a>
+    <% else %> <!-- IF PETITION -->
+      <a href="#" class="report-container">
+        <div style="border: 5px solid black; color:black;  margin-top: 10px;" id="btn-show-petition<%= post.id %>" class="btn-show-petition" onclick="show_petition(this)">
+          <%= post.write_up %><br>
+          <button id="btn-sign-petition<%= post.id %>" class="btn-sign-petition" onclick="sign_petition(event, this)">Sign petition here...</button>
+
+          <!-- DIV FOR SLIDE OUT WHEN CLICKING PETITION -->
+
+          <div id="show-petition<%= post.id %>" class="show-post">
+            <%= post.signatures.count %> out of 300<br>
+            <%= post.write_up %>
+            <button id="btn-sign-petition<%= post.id %>" class="btn-sign-petition" onclick="sign_petition(event, this)">Sign petition here...</button>
+          </div> 
+
+          <!-- END DIV FOR SLIDE OUT WHEN CLICKING PETITION -->
+
+          <!-- DIV FOR SLIDE OUT WHEN SIGNING PETITION -->
+
+          <div id="sign-petition<%= post.id %>" class="show-post">
+            Sign the<br>Petition
+            <% @signature = Signature.new %>
+            <%= form_for(@signature) do |f| %>
+              <div class="field">
+                <%= f.label :name %><br>
+                <%= f.text_field :name, onclick:"event.stopPropagation();"%>
+              </div>
+              <div class="field">
+                <%= f.label :age %><br>
+                <%= f.number_field :age, onclick:"event.stopPropagation();"%>
+              </div>
+              <div class="field">
+                <%= f.label :email %><br>
+                <%= f.text_field :email, onclick:"event.stopPropagation();" %>
+              </div>
+              <div class="field">
+                <%= f.hidden_field :petition_id, :value=>post.id %>
+              </div>
+              <div class="actions">
+                <%= f.submit 'Sign', onclick:"event.stopPropagation();"%>
+              </div>
+            <% end %>
+          </div>
+
+          <!-- END DIV FOR SLIDE OUT WHEN SIGNING PETITION -->
+
+        </div>
+      </a>
     <% end %>
   <% end %>
 </div>
 
 
 <script>
+function show_petition(element){
+  $(".show-post").hide();
+  var count = element.id.slice(-1);
+  $("#show-petition"+count).show();//('slide', {direction: 'left'}, 500);
+}
+
+function sign_petition(e, element){
+  $(".show-post").hide();
+  var count = element.id.slice(-1);
+  $("#sign-petition"+count).show();//('slide', {direction: 'left'}, 500);
+  var event = e || arguments[0] || window.event;
+  event.stopPropagation();
+}
+
+function show_report(element){
+  $(".show-post").hide();
+  var count = element.id.slice(-1);
+  $("#show-report"+count).show();//('slide', {direction: 'left'}, 500);
+}
+
 $(document).ready(function(){
   // $( "#toggle" ).toggle( "slide" );
   $("#report-new").hide();
   $("#petition-new").hide();
   $("#post-options").hide();
   $("#menu-options").hide();
-  $(".report-view").hide();
 
   $("#btn-menu").click(function(){
     $("#btn-menu").hide();
@@ -78,5 +170,9 @@ $(document).ready(function(){
     $("#report-new").show('slide', {direction: 'right'}, 500);
   });
 
+  /* INITIALLY HIDE POST INFORMATION */
+  $(".show-post").hide();
+
 });
+
 </script>

@@ -25,11 +25,15 @@ class ReportsController < ApplicationController
   # POST /reports.json
   def create
     @report = Report.new(report_params)
+    tags = params['tags'].split(',')
 
     respond_to do |format|
       if @report.save
-        format.html { redirect_to @report, notice: 'Report was successfully created.' }
-        format.json { render :show, status: :created, location: @report }
+        tags.each do |tag|
+          @tag = Tag.new(name: tag, report_id: @report.id)
+          @tag.save
+        end
+        format.html { redirect_to posts_path(:code=>'pie') }
       else
         format.html { render :new }
         format.json { render json: @report.errors, status: :unprocessable_entity }

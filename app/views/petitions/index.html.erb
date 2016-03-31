@@ -1,6 +1,4 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Listing Petitions</h1>
+<h1>Petitions</h1>
 
 <table>
   <thead>
@@ -11,19 +9,81 @@
     </tr>
   </thead>
 
+
   <tbody>
     <% @petitions.each do |petition| %>
       <tr>
         <td><%= petition.title %></td>
         <td><%= petition.write_up %></td>
+        <td><button id="btn-sign-petition<%= petition.id %>" class="btn-sign-petition">Sign petition here...</button></td>
+        <td><button id="btn-show-petition<%= petition.id %>" class="btn-show-petition">View</button></td>
         <td><%= link_to 'Show', petition %></td>
         <td><%= link_to 'Edit', edit_petition_path(petition) %></td>
         <td><%= link_to 'Destroy', petition, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
+    <div id="show-petition<%= petition.id %>" class="show-petition">
+      <%= petition.signatures.count %> out of 300<br>
+      <%= petition.write_up %>
+      <button id="btn-sign-petition<%= petition.id %>" class="btn-sign-petition">Sign petition here...</button>
+    </div> 
+    <div id="sign-petition<%= petition.id %>" class="sign-petition">
+      Sign the<br>Petition
+      <% @signature = Signature.new %>
+      <%= form_for(@signature) do |f| %>
+  
+      <div class="field">
+        <%= f.label :name %><br>
+        <%= f.text_field :name %>
+      </div>
+      <div class="field">
+        <%= f.label :age %><br>
+        <%= f.number_field :age %>
+      </div>
+      <div class="field">
+        <%= f.label :email %><br>
+        <%= f.text_field :email %>
+      </div>
+      <div class="field">
+        <%= f.hidden_field :petition_id, :value=>petition.id %>
+      </div>
+      <div class="actions">
+        <%= f.submit 'Sign'%>
+      </div>
+    <% end %>
+
+    </div>
     <% end %>
   </tbody>
 </table>
 
+
+
 <br>
 
-<%= link_to 'New Petition', new_petition_path %>
+<!-- 
+  <%= content_tag :div, class: "temp_information", data: {temp: @petitions.count} do %>
+  <% end %>
+ -->
+
+<script>
+$(document).ready(function(){
+
+  $(".show-petition").hide();
+  $(".sign-petition").hide();
+  
+  $(".btn-show-petition").click(function(){
+    $(".show-petition").hide();
+    $(".sign-petition").hide();
+    var count = this.id.slice(-1);
+    $("#show-petition"+count).show();//('slide', {direction: 'left'}, 500);
+  });
+
+  $(".btn-sign-petition").click(function(){
+    $(".show-petition").hide();
+    $(".sign-petition").hide();
+    var count = this.id.slice(-1);
+    $("#sign-petition"+count).show();//('slide', {direction: 'left'}, 500);
+  });
+
+});
+</script>

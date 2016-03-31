@@ -1,6 +1,6 @@
-class CreatePetitionSignatures < ActiveRecord::Migration
+class CreateSignatures < ActiveRecord::Migration
   def change
-    create_table :petition_signatures do |t|
+    create_table :signatures do |t|
       t.string :name
       t.integer :age
       t.string :email

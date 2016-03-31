@@ -11,15 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160329073731) do
+ActiveRecord::Schema.define(version: 20160331150352) do
 
-  create_table "petition_signatures", force: :cascade do |t|
+  create_table "comments", force: :cascade do |t|
+    t.text     "write_up"
     t.string   "name"
     t.integer  "age"
-    t.string   "email"
-    t.integer  "petition_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "report_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "petitions", force: :cascade do |t|
@@ -35,6 +35,15 @@ ActiveRecord::Schema.define(version: 20160329073731) do
     t.integer  "age"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "signatures", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "age"
+    t.string   "email"
+    t.integer  "petition_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "tags", force: :cascade do |t|
