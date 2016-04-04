@@ -1,13 +1,25 @@
 Rails.application.routes.draw do
+  devise_for :users, skip: :all
+  devise_scope :user do
+    get '/sign_in' => 'devise/sessions#new', as: :new_user_session
+    post '/sign_in' => 'devise/sessions#create', as: :user_session
+    delete '/sign_out' => 'devise/sessions#destroy', as: :destroy_user_session
+  end
+  resources :choices
+  resources :polls
+  resources :surveys
+  resources :announcements
+  resources :calls
   resources :comments
   resources :signatures
-  resources :post_comments
-  resources :comment_posts
   resources :petitions
   resources :tags
   resources :reports
   root  'pages#index'
   get '/posts' => 'pages#posts', as: :posts
+  get '/newsboard' => 'pages#newsboard', as: :newsboard
+  get '/about' => 'pages#about', as: :about
+  patch '/about' => 'pages#about_edit', as: :about_edit
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

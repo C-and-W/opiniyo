@@ -1,10 +1,12 @@
 <div class="row">
   <div class="col-xs-2">
-    <button id="btn-menu">Main Menu</button>
-    <div id="menu-options">
-      <%= link_to 'Reports', id: 'btn-reports' %><br>
-      <%= link_to 'Newsboard', id: 'btn-newsboard' %><br>
-      <%= link_to 'About', id: 'btn-about' %><br>
+    <button id="btn-menu" style="border:none; height: 100px; width: 100px; background-color:#FCB800;"><%= image_tag 'main_menu_icon-15.png', style: "background-color:#FCB800; height: 50px;" %></button>
+    <div id="menu-options" class="panel panel-left">
+      <button id="menu-options-btn-close" class="btn-close"><%= image_tag 'exit_button-15.png', style: "background-color:#FCB800; height: 50px;" %></button>
+      <br>
+      <%= link_to 'Reports', posts_path(code: 'pie'), id: 'btn-reports', class: 'btn-panel', style: 'margin-top: 15vh;' %><br>
+      <%= link_to 'Newsboard', newsboard_path, id: 'btn-newsboard', class: 'btn-panel'%><br>
+      <%= link_to 'About', about_path, id: 'btn-about', class: 'btn-panel' %><br>
     </div>
 
   </div>
@@ -12,13 +14,23 @@
     REPORTS
   </div>
   <div class="col-xs-2">
-    <button id="btn-post">Create Post</button>
-    <div id="post-options">
-      <button id="btn-report">Report</button>
-      <button id="btn-petition">Petition</button>
+    <button id="btn-post" style="border:none; height: 100px; width: 100px; background-color:#FCB800; float:right;"><%= image_tag 'main_menu_icon-15.png', style: "background-color:#FCB800; height: 50px;" %></button>
+    <div id="post-options" class="panel panel-right">
+      <button id="post-options-btn-close" class="btn-close"><%= image_tag 'exit_button-15.png', style: "background-color:#FCB800; height: 50px;" %></button>
+      <br>
+      <button id="btn-report" class='btn-panel' style='margin-top: 15vh; text-align:left;'>Report</button>
+      <button id="btn-petition" class='btn-panel' style="margin-top: 3vh; text-align: left;">Petition</button>
     </div>
-    <%= render 'reports/new' %>
-    <%= render 'petitions/new' %>
+    <div id="report-new" class="panel panel-right">
+      <button id="post-options-btn-close" class="btn-close"><%= image_tag 'exit_button-15.png', style: "background-color:#FCB800; height: 50px;" %></button>
+      <br>
+      <%= render 'reports/form' %>
+    </div>
+    <div id="petition-new" class="panel panel-right">
+      <button id="petition-new-btn-close" class="btn-close"><%= image_tag 'exit_button-15.png', style: "background-color:#FCB800; height: 50px;" %></button>
+      <br>
+      <%= render 'petitions/form' %>
+    </div>
   </div>
 </div>
 
@@ -37,20 +49,14 @@
 <div>
   <% @posts.each do |post| %>
     <% if post.class.name == "Report" %> <!-- IF REPORT -->
-      <a href="#" class="report-container">
-        <div style="border: 5px solid black; margin-top: 10px;" id="btn-show-report<%= post.id %>" class="btn-show-report" onclick="show_report(this)">
-          <%= post.write_up %><br>
-          <% post.tags.each do |tag| %>
-            #<%= tag.name %> 
-          <% end %>
-          <% if post.tags.count > 0 %>
-            <br>
-          <% end %>
-          <strong><%= post.name %>, <%= post.age %></strong>
-
-          <!-- DIV FOR SLIDE OUT WHEN CLICKING REPORT -->
-
-          <div id="show-report<%= post.id %>" class="show-post"> 
+      <% if user_signed_in? %> <!-- IF ADMIN -->
+        <%= link_to post, method: :delete, data: { confirm: 'Are you sure?' }, style: "outline:none; text-decoration: none; background-color:white;" do %> <!-- THIS NEEDS TO BE BEFORE THE show-report or show-petition DIV -->
+          <%= image_tag "delete_post_button-15.png", style: "height: 50px; margin-bottom: -30px;", class: "delete-link" %>
+        <% end %>
+      <% end %>
+      <a href="#" class="report-container" style="outline: none;">
+        <div style="border: 5px solid black; margin-bottom: 10px; margin-left: 20px;" id="btn-show-report<%= post.id %>" class="btn-show-report" onclick="show_report(this)">
+          <div style="margin-left: 25px;">
             <%= post.write_up %><br>
             <% post.tags.each do |tag| %>
               #<%= tag.name %> 
@@ -59,6 +65,68 @@
               <br>
             <% end %>
             <strong><%= post.name %>, <%= post.age %></strong>
+            <% if post.noted %>
+              <% if user_signed_in? %>
+                <%= form_for(post, html: {method: "patch"}) do %>
+                  <input name="btn-noted" value="false" class="hidden">
+                  <input type="image" src="/assets/already_noted_icon-15.png" onclick="event.stopPropagation();" style="height: 50px; outline: none;">
+                <% end %>
+              <% else %>
+                <img src="/assets/noted_seal_icon-15.png" style="height: 50px;">
+              <% end %>
+            <% else %>
+              <% if user_signed_in? %>
+                <%= form_for(post, html: {method: "patch"}) do %>
+                  <input name="btn-noted" value="true" class="hidden">
+                  <input type="image" src="/assets/note_button-15.png" onclick="event.stopPropagation();" style="height: 50px; outline: none;">
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
+
+          <!-- DIV FOR SLIDE OUT WHEN CLICKING REPORT -->
+
+          <div id="show-report<%= post.id %>" class="show-post"> 
+
+            <div style="border: 5px solid black; margin-bottom: 10px;">
+              <%= post.write_up %><br>
+              <% post.tags.each do |tag| %>
+                #<%= tag.name %> 
+              <% end %>
+              <% if post.tags.count > 0 %>
+                <br>
+              <% end %>
+              <strong><%= post.name %>, <%= post.age %></strong>
+            </div>
+
+            <% post.comments.each do |comment| %>
+              <div style="border: 5px solid black; margin-bottom: 10px;">
+                <%= comment.write_up %><br>
+                <strong><%= comment.name %>, <%= comment.age %></strong>
+              </div>
+            <% end %>
+
+            <div style="border: 5px solid black; margin-bottom: 10px;">
+              <% @comment = Comment.new %>
+              <%= form_for(@comment) do |f| %>
+                <div class="field">
+                  <%= f.text_area :write_up, placeholder: "Type here..."%>
+                </div>
+                <div class="field">
+                  <%= f.text_field :name, placeholder: "Name..."%>
+                </div>
+                <div class="field">
+                  <%= f.number_field :age, placeholder: "Age..."%>
+                </div>
+                <div class="field">
+                  <%= f.hidden_field :report_id, :value=>post.id %>
+                </div>
+                <div class="actions">
+                  <%= f.submit 'Reply'%>
+                </div>
+              <% end %>
+            </div>
+
           </div>
 
           <!-- END DIV FOR SLIDE OUT WHEN CLICKING REPORT -->
@@ -66,17 +134,48 @@
         </div>
       </a>
     <% else %> <!-- IF PETITION -->
-      <a href="#" class="report-container">
-        <div style="border: 5px solid black; color:black;  margin-top: 10px;" id="btn-show-petition<%= post.id %>" class="btn-show-petition" onclick="show_petition(this)">
-          <%= post.write_up %><br>
-          <button id="btn-sign-petition<%= post.id %>" class="btn-sign-petition" onclick="sign_petition(event, this)">Sign petition here...</button>
+      <% if user_signed_in? %> <!-- IF ADMIN -->
+        <%= link_to post, method: :delete, data: { confirm: 'Are you sure?' }, style: "outline:none; text-decoration: none; background-color:white; " do %> <!-- THIS NEEDS TO BE BEFORE THE show-report or show-petition DIV -->
+          <%= image_tag "delete_post_button-15.png", style: "height: 50px; margin-bottom: -30px;", class: "delete-link" %>
+        <% end %>
+      <% end %>
+      <a href="#" class="report-container" style="outline: none;">
+        <div style="border: 5px solid #FCB800; color:black;  margin-bottom: 10px; margin-left: 20px;" id="btn-show-petition<%= post.id %>" class="btn-show-petition" onclick="show_petition(this)">
+          <div style="margin-left: 25px;">
+            <%= post.write_up %><br>
+            <button id="btn-sign-petition<%= post.id %>" class="btn-sign-petition" onclick="sign_petition(event, this)">Sign petition here...</button>
+            <% if post.noted %>
+              <% if user_signed_in? %>
+                <%= form_for(post, html: {method: "patch"}) do %>
+                  <input name="btn-noted" value="false" class="hidden">
+                  <input type="image" src="/assets/already_noted_icon-15.png" onclick="event.stopPropagation();" style="height: 50px; outline: none;">
+                <% end %>
+              <% else %>
+                <img src="/assets/noted_seal_icon-15.png" style="height: 50px;">
+              <% end %>
+            <% else %>
+              <% if user_signed_in? %>
+                <%= form_for(post, html: {method: "patch"}) do %>
+                  <input name="btn-noted" value="true" class="hidden">
+                  <input type="image" src="/assets/note_button-15.png" onclick="event.stopPropagation();" style="height: 50px; outline: none;">
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
 
           <!-- DIV FOR SLIDE OUT WHEN CLICKING PETITION -->
 
           <div id="show-petition<%= post.id %>" class="show-post">
-            <%= post.signatures.count %> out of 300<br>
-            <%= post.write_up %>
-            <button id="btn-sign-petition<%= post.id %>" class="btn-sign-petition" onclick="sign_petition(event, this)">Sign petition here...</button>
+
+            <div style="border: 5px solid black; margin-bottom: 10px;">
+              <%= post.signatures.count %> out of 300<br>
+            </div>
+
+            <div style="border: 5px solid black; margin-bottom: 10px;">
+              <%= post.write_up %>
+              <button id="btn-sign-petition<%= post.id %>" class="btn-sign-petition" onclick="sign_petition(event, this)">Sign petition here...</button>
+            </div>
+
           </div> 
 
           <!-- END DIV FOR SLIDE OUT WHEN CLICKING PETITION -->
@@ -88,16 +187,13 @@
             <% @signature = Signature.new %>
             <%= form_for(@signature) do |f| %>
               <div class="field">
-                <%= f.label :name %><br>
-                <%= f.text_field :name, onclick:"event.stopPropagation();"%>
+                <%= f.text_field :name, placeholder: "Name...", onclick:"event.stopPropagation();"%>
               </div>
               <div class="field">
-                <%= f.label :age %><br>
-                <%= f.number_field :age, onclick:"event.stopPropagation();"%>
+                <%= f.number_field :age, placeholder: "Age...", onclick:"event.stopPropagation();"%>
               </div>
               <div class="field">
-                <%= f.label :email %><br>
-                <%= f.text_field :email, onclick:"event.stopPropagation();" %>
+                <%= f.text_field :email, placeholder: "Email...", onclick:"event.stopPropagation();" %>
               </div>
               <div class="field">
                 <%= f.hidden_field :petition_id, :value=>post.id %>
@@ -140,35 +236,53 @@ function show_report(element){
 
 $(document).ready(function(){
   // $( "#toggle" ).toggle( "slide" );
-  $("#report-new").hide();
-  $("#petition-new").hide();
-  $("#post-options").hide();
-  $("#menu-options").hide();
+  $(".panel-right").hide();
+  $(".panel-left").hide();
 
   $("#btn-menu").click(function(){
     $("#btn-menu").hide();
-    $("#report-new").hide();
-    $("#petition-new").hide();
-    $("#post-options").hide();
+    $(".panel-right").hide();
     $("#btn-post").show('slide', {direction: 'right'}, 500);
     $("#menu-options").show('slide', {direction: 'left'}, 500);
   });
 
   $("#btn-post").click(function(){
     $("#btn-post").hide();
-    $("#menu-options").hide();
+    $(".panel-left").hide();
     $("#btn-menu").show('slide', {direction: 'left'}, 500);
     $("#post-options").show('slide', {direction: 'right'}, 500);
   });
 
   $("#btn-petition").click(function(){
-    $("#post-options").hide();
+    $(".panel-right").hide();
     $("#petition-new").show('slide', {direction: 'right'}, 500);
   });
+
   $("#btn-report").click(function(){
-    $("#post-options").hide();
+    $(".panel-right").hide();
     $("#report-new").show('slide', {direction: 'right'}, 500);
   });
+
+    $("#post-options-btn-close").click(function(){
+    $("#post-options").hide();
+    $("#btn-post").show('slide', {direction: 'left'}, 500);
+  });
+
+  $("#menu-options-btn-close").click(function(){
+    $("#menu-options").hide();
+    $("#btn-menu").show('slide', {direction: 'left'}, 500);
+  });
+
+  $("#report-new-btn-close").click(function(){
+    $("#report-new").hide();
+    $("#btn-post").show('slide', {direction: 'right'}, 500);
+  });
+
+  $("#petition-new-btn-close").click(function(){
+    $("#petition-new").hide();
+    $("#btn-post").show('slide', {direction: 'right'}, 500);
+  });
+
 
   /* INITIALLY HIDE POST INFORMATION */
   $(".show-post").hide();

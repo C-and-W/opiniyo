@@ -5,7 +5,8 @@ class PagesController < ApplicationController
   end
 
   def posts
-    if params['code'] == "pie"
+    session[:code] = params[:code]
+    if session[:code] == "pie"
       @posts = (Report.all + Petition.all).sort_by(&:created_at)
       if params['query'].present?
         @posts = Report.joins(:tags).merge(Tag.where("lower(tags.name) LIKE lower(?)", "%#{params['query']}%"))
@@ -26,8 +27,32 @@ class PagesController < ApplicationController
     end
   end
 
+  def newsboard
+    @news = (Call.all + Survey.all + Announcement.all + Poll.all).sort_by(&:created_at)
+    for_posts
+    for_newsboard
+  end
+
+  def about
+    @about = About.first
+    for_posts
+  end
+
+  def about_edit
+    about = About.first
+    about.update(write_up: params['write_up'])
+    redirect_to about_path
+  end
+
   def for_posts
     @report = Report.new
     @petition = Petition.new
+  end
+
+  def for_newsboard
+    @call = Call.new
+    @survey = Survey.new
+    @poll = Poll.new
+    @announcement = Announcement.new
   end
 end

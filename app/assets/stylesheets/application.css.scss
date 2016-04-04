@@ -40,21 +40,40 @@
 
 #post-options, #menu-options{
    background-color: #FCB800;
-   width: 100%;
+   width: 50wv;
 }
 
 #report-new, #petition-new{
    background-color: #FCB800;
-   width: 100%;
 }
 
 #btn-menu, #btn-post{
    background-color: #FCB800;
 }
 
-.report-container:link, .report-container:hover, .report-container:active, .report-container:visited{
+.report-container:link, .report-container:hover, .report-container:active, .report-container:visited,
+.btn-panel:link, .btn-panel:hover, .btn-panel:active, .btn-panel:visited{
    color: black;
    display: block;
    text-decoration: none;
    background-color: white;
+}
+
+.btn-close{
+   border:none; 
+   padding:0;
+}
+
+
+.btn-panel{
+   border: 4px solid black;
+   font-size: 24px; 
+   height: 45px; 
+   width:15vw; 
+   text-decoration: none;
+}
+
+.panel{
+   padding: 25px 25px 25px 25px; 
+   width: 325px;
 }

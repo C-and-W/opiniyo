@@ -40,15 +40,12 @@ class PetitionsController < ApplicationController
   # PATCH/PUT /petitions/1
   # PATCH/PUT /petitions/1.json
   def update
-    respond_to do |format|
-      if @petition.update(petition_params)
-        format.html { redirect_to @petition, notice: 'Petition was successfully updated.' }
-        format.json { render :show, status: :ok, location: @petition }
-      else
-        format.html { render :edit }
-        format.json { render json: @petition.errors, status: :unprocessable_entity }
-      end
+    if params['btn-noted'] == 'true'
+      @petition.update(noted: true)
+    else
+      @petition.update(noted: false)
     end
+    redirect_to posts_path(code: 'pie')
   end
 
   # DELETE /petitions/1
@@ -56,7 +53,7 @@ class PetitionsController < ApplicationController
   def destroy
     @petition.destroy
     respond_to do |format|
-      format.html { redirect_to petitions_url, notice: 'Petition was successfully destroyed.' }
+      format.html { redirect_to posts_path(code: 'pie') }
       format.json { head :no_content }
     end
   end

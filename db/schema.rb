@@ -11,7 +11,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160331150352) do
+ActiveRecord::Schema.define(version: 20160404082843) do
+
+  create_table "about", force: :cascade do |t|
+    t.text "write_up"
+  end
+
+  create_table "abouts", force: :cascade do |t|
+    t.text     "write_up"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "announcements", force: :cascade do |t|
+    t.string   "title"
+    t.text     "write_up"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "calls", force: :cascade do |t|
+    t.string   "event"
+    t.string   "date"
+    t.string   "time"
+    t.string   "venue"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "choices", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "votes",      default: 0
+    t.integer  "poll_id"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "comments", force: :cascade do |t|
     t.text     "write_up"
@@ -25,16 +59,25 @@ ActiveRecord::Schema.define(version: 20160331150352) do
   create_table "petitions", force: :cascade do |t|
     t.string   "title"
     t.text     "write_up"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.boolean  "noted",      default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  create_table "polls", force: :cascade do |t|
+    t.text     "information"
+    t.string   "deadline"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "reports", force: :cascade do |t|
     t.text     "write_up"
     t.string   "name"
     t.integer  "age"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.boolean  "noted",      default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   create_table "signatures", force: :cascade do |t|
@@ -46,11 +89,34 @@ ActiveRecord::Schema.define(version: 20160331150352) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "surveys", force: :cascade do |t|
+    t.text     "link"
+    t.text     "write_up"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "tags", force: :cascade do |t|
     t.string   "name"
     t.integer  "report_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "username",               default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+  end
+
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["username"], name: "index_users_on_username", unique: true
 
 end

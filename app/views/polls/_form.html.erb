@@ -1,0 +1,65 @@
+<%= form_for(@poll) do |f| %>
+  <% if @poll.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@poll.errors.count, "error") %> prohibited this poll from being saved:</h2>
+
+      <ul>
+      <% @poll.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :information %><br>
+    <%= f.text_area :information %>
+  </div>
+  <div class="field">
+    <%= f.label :deadline %><br>
+    <%= f.text_field :deadline %>
+  </div>
+
+    <table id="choice_table">
+      <tbody id="choice_body">
+        Choices
+        <tr id="choice_row">
+          <% @choice = Choice.new %>
+          <%= fields_for "choices[]", @choice do |ff| %>
+            <td style="border: 1px solid black;">BOX</td> <!--INFORM ME IF U'RE GONNA DELETE THIS <td> -->
+            <td><%= ff.text_field :name, id: "choice_name" %></td>
+            <td><input type="button" id="delbutton" class="btn btn-danger" value="Remove" onclick="deleteRow(this)"/></td>
+          <% end %>
+        </tr>
+      </tbody>
+    </table>
+
+    <br>
+
+  <div class="actions">
+    <input type="button" onclick="cloneRow()" value="Add More" class="btn btn-success"/>
+    <%= f.submit 'Post' %>
+  </div>
+
+<% end %>
+
+<script>
+  var row = document.getElementById("choice_row"); // find row to copy
+  function cloneRow()
+  {
+    var count = document.getElementById("choice_table").getElementsByTagName("tbody")[0].getElementsByTagName("tr").length; //find number of rows
+    var tableForm = document.getElementById("choice_body");//getElementsByTagName("form"); // find table to append to
+    var clone = row.cloneNode(true); // copy children too
+    clone.id = 'choice_row'+(count + 1);
+    tableForm.appendChild(clone); // add new row to end of table
+    document.getElementById("choice_row"+(count+1)).getElementsByTagName("td")[1].getElementsByTagName("input")[0]['value'] = "";
+  }
+
+  function deleteRow(row)
+  {
+    var i=row.parentNode.parentNode.rowIndex;
+    document.getElementById('choice_table').deleteRow(i);
+  }
+
+</script>
+
