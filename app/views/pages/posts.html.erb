@@ -7,6 +7,9 @@
       <%= link_to 'Reports', posts_path(code: 'pie'), id: 'btn-reports', class: 'btn-panel', style: 'margin-top: 15vh;' %><br>
       <%= link_to 'Newsboard', newsboard_path, id: 'btn-newsboard', class: 'btn-panel'%><br>
       <%= link_to 'About', about_path, id: 'btn-about', class: 'btn-panel' %><br>
+      <% if user_signed_in? %>
+        <%= link_to "Sign out", destroy_user_session_path, :method => :delete, class: 'btn-panel' %>
+      <% end %>
     </div>
 
   </div>
@@ -22,7 +25,7 @@
       <button id="btn-petition" class='btn-panel' style="margin-top: 3vh; text-align: left;">Petition</button>
     </div>
     <div id="report-new" class="panel panel-right">
-      <button id="post-options-btn-close" class="btn-close"><%= image_tag 'exit_button-15.png', style: "background-color:#FCB800; height: 50px;" %></button>
+      <button id="report-new-btn-close" class="btn-close"><%= image_tag 'exit_button-15.png', style: "background-color:#FCB800; height: 50px;" %></button>
       <br>
       <%= render 'reports/form' %>
     </div>

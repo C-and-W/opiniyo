@@ -12,20 +12,21 @@
   <% end %>
 
   <div class="field">
-    <%= f.text_area :write_up, :placeholder=>'Type here...', :style=>"resize:none;" %>
-  </div>
-  <div class="field">
-    <%= f.text_field :name, :placeholder=>'Name...' %>
-  </div>
-  <div class="field">
-    <%= f.number_field :age, :placeholder=>'Age...'%>
+    <%= f.text_area :write_up, :placeholder=>'Type here...', :style=>"resize:none; border: 4px solid black; font-size: 24px; height: 500px;width:275px;" %>
   </div>
 
   <div class="field">
-    <input name="tags" type="text" placeholder="Tags (e.g. Traffic,NeverAgain)">
+    <input name="tags" type="text" placeholder="Tags (e.g. Traffic,NeverAgain)" style="border: 4px solid black; font-size: 24px; height: 45px;width:275px;">
+  </div>
+
+  <div class="field">
+    <%= f.text_field :name, :placeholder=>'Name...', :style=>"border: 4px solid black; font-size: 24px; height: 45px;width:275px;" %>
+  </div>
+  <div class="field">
+    <%= f.number_field :age, :placeholder=>'Age...', :style=>"border: 4px solid black; font-size: 24px; height: 45px;width:275px;"%>
   </div>
 
   <div class="actions">
-    <%= f.submit 'Post' %>
+    <%= f.submit 'Post', :style=>"border: 4px solid black; font-size: 24px; height: 45px;width:100px;" %>
   </div>
 <% end %>
