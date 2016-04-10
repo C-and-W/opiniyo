@@ -1,7 +1,7 @@
 <%= form_for(@announcement) do |f| %>
   <% if @announcement.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@announcement.errors.count, "error") %> prohibited this announcement from being saved:</h2>
+      <h2><%= pluralize(@announcement.errors.count, "error") %> prohibited this report from being saved:</h2>
 
       <ul>
       <% @announcement.errors.full_messages.each do |message| %>
@@ -12,14 +12,10 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
+    <%= f.text_area :write_up, :placeholder=>'Type here...', class: 'form-panel', :style=>"resize:none; height: 580px; padding-top: 30px; padding-right: 30px; margin-top: 6vh;" %>
   </div>
-  <div class="field">
-    <%= f.label :write_up %><br>
-    <%= f.text_area :write_up %>
-  </div>
+
   <div class="actions">
-    <%= f.submit 'Post' %>
+    <%= f.submit 'Post', class: 'form-panel form-submit' %>
   </div>
 <% end %>

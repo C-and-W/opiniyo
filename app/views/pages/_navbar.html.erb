@@ -1,0 +1,69 @@
+<!-- hamburger menu -->
+  <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-hamburger" style="">
+    <button id="cbp-spmenu-hamburger-close" class="btn-close"><%= image_tag 'exit_button-15.png', style: "background-color:#FCB800; height: 50px;" %></button>
+      <div>
+      <%= link_to 'Reports', posts_path(code: 'pie'), id: 'btn-reports', class: 'link-panel', style: "margin-top: 11vh;" %><br>
+      <%= link_to 'Newsboard', newsboard_path, id: 'btn-newsboard', class: 'link-panel' %><br>
+      <%= link_to 'About', about_path, id: 'btn-about', class: 'link-panel' %><br>
+      <% if user_signed_in? %>
+        <%= link_to "Sign out", destroy_user_session_path, :method => :delete, class: 'link-panel' %>
+      <% end %>
+    </div>
+  </nav>
+
+  <!-- megaphone menu -->
+  <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-megaphone">
+    <button id="cbp-spmenu-megaphone-close" class="btn-close"><%= image_tag 'exit_button-15.png', style: "background-color:#FCB800; height: 50px;" %></button>
+    <button id="btn-new-report" class='btn-panel' style='margin-top: 11vh;'>Report</button>
+    <button id="btn-new-petition" class='btn-panel' style="margin-top: 2vh;">Petition</button> 
+  </nav>
+
+  <!-- new report menu -->
+  <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-new-report">
+    <button id="cbp-spmenu-new-report-close" class="btn-close"><%= image_tag 'exit_button-15.png', style: "background-color:#FCB800; height: 50px;" %></button>
+  <div style="margin-top: 11vh; font-family: 'Roboto Slab', serif; font-weight:bold; font-size: 35px; line-height: 30px; color:black;">What<br>Happened?</div>
+   <%= render 'reports/form' %>
+  </nav>
+
+  <!-- new petition menu -->
+  <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-new-petition">
+    <button id="cbp-spmenu-new-petition-close" class="btn-close"><%= image_tag 'exit_button-15.png', style: "background-color:#FCB800; height: 50px;" %></button>
+   <%= render 'petitions/form' %>
+  </nav>
+
+  <div id="sticky-anchor"></div>
+  <div id="sticky" style="background-color: #FCB800; margin: 0; padding: 0; height: 140px; width: 100%;">
+    <button id="showHamburgerMenu" style="border:none; height: 140px; width: 140px; background-color:#FCB800; border-right: solid white 5px; "><%= image_tag 'main_menu_icon-15.png', style: "background-color:#FCB800; height: 60px;" %></button>
+    <button id="showMegaphoneMenu" style="border:none; height: 140px; width: 140px; background-color:#FCB800; float:right; border-left:solid white 5px; "><%= image_tag 'report_icon-15.png', style: "background-color:#FCB800; height: 70px;" %></button> 
+    <h1 class="pg-title" style="margin-left: 190px; font-family: 'Roboto', sans-serif; font-weight:bold; font-size: 90px; margin-top: -52px; color:black;"><%= @header %></h1>
+  </div>
+
+
+
+<script>
+function sticky_relocate() {
+    var window_top = $(window).scrollTop();
+    var div_top = $('#sticky-anchor').offset().top;
+    if (window_top > div_top) {
+        $('#sticky').addClass('stick');
+        $('#sticky-anchor').height($('#sticky').outerHeight());
+    } else {
+        $('#sticky').removeClass('stick');
+        $('#sticky-anchor').height(0);
+    }
+}
+
+$(function() {
+    $(window).scroll(sticky_relocate);
+    sticky_relocate();
+})
+</script>
+
+
+<style>
+#sticky.stick {
+    position: fixed;
+    top: 0;
+    z-index: 1;
+}
+</style>

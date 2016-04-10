@@ -1,0 +1,121 @@
+<div class="row">
+  <div class="col-xs-2">
+    <button id="btn-menu">Main Menu</button>
+    <div id="menu-options" class="panel-left">
+      <button id="menu-options-btn-close">X</button>
+      <%= link_to 'Reports', posts_path(code: 'pie'), id: 'btn-reports' %><br>
+      <%= link_to 'Newsboard', newsboard_path, id: 'btn-newsboard' %><br>
+      <%= link_to 'About', about_path, id: 'btn-about' %><br>
+    </div>
+
+  </div>
+  <div class="col-xs-8">
+    REPORTS
+  </div>
+  <div class="col-xs-2">
+    <button id="btn-post">Create Post</button>
+    <div id="post-options" class="panel-right">
+      <button id="post-options-btn-close">X</button>
+      <button id="btn-report">Report</button>
+      <button id="btn-petition">Petition</button>
+    </div>
+    <div id="report-new" class="panel-right">
+      <button id="report-new-btn-close">X</button>
+      <%= render 'reports/form' %>
+    </div>
+    <div id="petition-new" class="panel-right">
+      <button id="petition-new-btn-close">X</button>
+      <%= render 'petitions/form' %>
+    </div>
+  </div>
+</div>
+
+
+<div>
+  <% if user_signed_in? %>
+    <%= form_for(@about, html: {method: "patch"}) do %>
+      <textarea name="write_up"><%= @about.write_up %></textarea>
+      <input type="submit" value="Submit">
+    <% end %>
+  <% else %>
+    <%= @about.write_up %>
+  <% end %>
+</div>
+
+
+<script>
+function show_petition(element){
+  $(".show-post").hide();
+  var count = element.id.slice(-1);
+  $("#show-petition"+count).show();//('slide', {direction: 'left'}, 500);
+}
+
+function sign_petition(e, element){
+  $(".show-post").hide();
+  var count = element.id.slice(-1);
+  $("#sign-petition"+count).show();//('slide', {direction: 'left'}, 500);
+  var event = e || arguments[0] || window.event;
+  event.stopPropagation();
+}
+
+function show_report(element){
+  $(".show-post").hide();
+  var count = element.id.slice(-1);
+  $("#show-report"+count).show();//('slide', {direction: 'left'}, 500);
+}
+
+$(document).ready(function(){
+  // $( "#toggle" ).toggle( "slide" );
+  $(".panel-right").hide();
+  $(".panel-left").hide();
+
+  $("#btn-menu").click(function(){
+    $("#btn-menu").hide();
+    $(".panel-right").hide();
+    $("#btn-post").show('slide', {direction: 'right'}, 500);
+    $("#menu-options").show('slide', {direction: 'left'}, 500);
+  });
+
+  $("#btn-post").click(function(){
+    $("#btn-post").hide();
+    $(".panel-left").hide();
+    $("#btn-menu").show('slide', {direction: 'left'}, 500);
+    $("#post-options").show('slide', {direction: 'right'}, 500);
+  });
+
+  $("#btn-petition").click(function(){
+    $(".panel-right").hide();
+    $("#petition-new").show('slide', {direction: 'right'}, 500);
+  });
+  
+  $("#btn-report").click(function(){
+    $(".panel-right").hide();
+    $("#report-new").show('slide', {direction: 'right'}, 500);
+  });
+
+    $("#post-options-btn-close").click(function(){
+    $("#post-options").hide();
+    $("#btn-post").show('slide', {direction: 'left'}, 500);
+  });
+
+  $("#menu-options-btn-close").click(function(){
+    $("#menu-options").hide();
+    $("#btn-menu").show('slide', {direction: 'left'}, 500);
+  });
+
+  $("#report-new-btn-close").click(function(){
+    $("#report-new").hide();
+    $("#btn-post").show('slide', {direction: 'right'}, 500);
+  });
+
+  $("#petition-new-btn-close").click(function(){
+    $("#petition-new").hide();
+    $("#btn-post").show('slide', {direction: 'right'}, 500);
+  });
+
+  /* INITIALLY HIDE POST INFORMATION */
+  $(".show-post").hide();
+
+});
+
+</script>

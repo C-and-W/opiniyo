@@ -59,7 +59,7 @@ class PollsController < ApplicationController
   def destroy
     @poll.destroy
     respond_to do |format|
-      format.html { redirect_to polls_url, notice: 'Poll was successfully destroyed.' }
+      format.html { redirect_to newsboard_path }
       format.json { head :no_content }
     end
   end

@@ -1,235 +1,293 @@
-<div class="row">
-  <div class="col-xs-2">
-    <button id="btn-menu">Main Menu</button>
-    <div id="menu-options" class="panel-left">
-      <button id="menu-options-btn-close">X</button>
-      <%= link_to 'Reports', posts_path(code: 'pie'), id: 'btn-reports' %><br>
-      <%= link_to 'Newsboard', newsboard_path, id: 'btn-newsboard' %><br>
-      <%= link_to 'About', about_path, id: 'btn-about' %><br>
-    </div>
-     <div id="newsboard-post-options" class="panel-left">
-      <button id="newsboard-post-options-btn-close">X</button>
-      <button id="btn-announcement">Announcement</button><br>
-      <button id="btn-call">Call for Volunteers</button><br>
-      <button id="btn-poll">Poll</button><br>
-      <button id="btn-survey">Survey</button><br>
-    </div>
-  </div>
-  <div class="col-xs-8">
-    NEWSBOARD
-  </div>
-  <div class="col-xs-2">
-    <button id="btn-post">Create Post</button>
-    <div id="post-options" class="panel-right">
-      <button id="post-options-btn-close">X</button>
-      <button id="btn-report">Report</button>
-      <button id="btn-petition">Petition</button>
-    </div>
-    <div id="report-new" class="panel-right">
-      <button id="report-new-btn-close">X</button>
-      <%= render 'reports/form' %>
-    </div>
-    <div id="petition-new" class="panel-right">
-      <button id="petition-new-btn-close">X</button>
-      <%= render 'petitions/form' %>
-    </div>
-    <div id="report-new" class="panel-right">
-      <%= render 'reports/form' %>
-    </div>
-    <div id="petition-new" class="panel-right">
-      <%= render 'petitions/form' %>
-    </div>
-    <div id="announcement-new" class="panel-right">
-      <%= render 'announcements/form' %>
-    </div>
-    <div id="call-new" class="panel-right">
-      <%= render 'calls/form' %>
-    </div>
-    <div id="poll-new" class="panel-right">
-      <%= render 'polls/form' %>
-    </div>
-    <div id="survey-new" class="panel-right">
-      <%= render 'surveys/form' %>
-    </div>
-  </div>
-</div>
-
-<% if user_signed_in? %>
-  <button id="btn-newsboard-post" class="btn-left">Create Newsboard Post</button>
-<% end %>
+<style src="assets/stylesheets/slidemenu.css.scss"></style>
+<style src="assets/stylesheets/masonry.css.scss"></style>
 
 
-<div>
-  <% @news.each do |news| %>
+
+
+<body class="cbp-spmenu-push" id="pg-newsboard" style="height: 100vh; overflow-y:auto;">
+  
+  <!-- navbar -->
+  <%= render 'pages/navbar' %>
+
+  
+    <button id="showPencilMenu" style="border:none; height: 140px; width: 140px; background-color:#FCB800; position:fixed; margin-top: 15vh; visibility:hidden;"><%= image_tag 'create_post_admin_icon-15.png', style: "background-color:#FCB800; height: 60px;" %></button>
+
     <% if user_signed_in? %>
-      <%= link_to 'Destroy', news, method: :delete, data: { confirm: 'Are you sure?' } %>
+      <script>
+        document.getElementById("showPencilMenu").style.visibility = "visible";
+      </script>
     <% end %>
+    <!-- pencil menu-->
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-pencil" style="">
+      <button id="cbp-spmenu-pencil-close" class="btn-close"><%= image_tag 'exit_button-15.png', style: "background-color:#FCB800; height: 50px;" %></button>
+        <div>
+        <button id="btn-new-announcement" class='btn-panel' style='margin-top: 11vh; font-size: 23px;'>Announcement</button>
+        <button id="btn-new-call" class='btn-panel' style="margin-top: 2vh; font-size: 23px;">Call for Volunteers</button> 
+        <button id="btn-new-poll" class='btn-panel' style="margin-top: 2vh; font-size: 23px;">Poll</button> 
+        <button id="btn-new-survey" class='btn-panel' style="margin-top: 2vh; font-size: 23px;">Survey</button> 
+      </div>
+    </nav>
+
+    <!-- poll menu -->
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right cbp-spmenu-post" id="cbp-spmenu-new-poll">
+      <button id="cbp-spmenu-new-poll-close" class="btn-close"><%= image_tag 'exit_button-15.png', style: "background-color:#FCB800; height: 50px;"%></button>
+      <div style="margin-top: 11vh; font-family: 'Roboto', sans-serif; font-weight:bold; font-size: 100px; color:black;">POLL</div>
+      <%= render 'polls/form' %>
+    </nav>
+
+    <!-- announcement menu -->
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right cbp-spmenu-post" id="cbp-spmenu-new-announcement">
+      <button id="cbp-spmenu-new-announcement-close" class="btn-close"><%= image_tag 'exit_button-15.png', style: "background-color:#FCB800; height: 50px;"%></button>
+      <div style="margin-top: 11vh; font-family: 'Roboto', sans-serif; font-weight:bold; font-size: 35px; color:black;">ANNOUNCEMENT</div>
+      <%= render 'announcements/form' %>
+    </nav>
+
+    <!-- survey menu -->
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right cbp-spmenu-post" id="cbp-spmenu-new-survey">
+      <button id="cbp-spmenu-new-survey-close" class="btn-close"><%= image_tag 'exit_button-15.png', style: "background-color:#FCB800; height: 50px;"%></button>
+      <div style="margin-top: 11vh; font-family: 'Roboto', sans-serif; font-weight:bold; font-size: 80px; color:black;">SURVEY</div>
+      <%= render 'surveys/form' %>
+    </nav>
+
+    <!-- call menu -->
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right cbp-spmenu-post" id="cbp-spmenu-new-call">
+      <button id="cbp-spmenu-new-call-close" class="btn-close"><%= image_tag 'exit_button-15.png', style: "background-color:#FCB800; height: 50px;"%></button>
+      <div style="margin-top: 11vh;">
+        <h1 style="padding:0 ;margin: 0; font-size: 60px; font-family: 'Roboto', sans-serif; font-weight:bold; color:black;">CALL FOR</h1>
+        <h1 style="padding: 0; margin: 0; font-size: 45px; font-family: 'Roboto', sans-serif; font-weight:bold; color:black;">VOLUNTEERS</h1>
+      </div>
+      </div>
+      <%= render 'calls/form' %>
+    </nav>
+
+
+
+
+
+<div class="grid" style="margin-top: 10vh;" >
+  <% @news.each do |news| %>
     <% if news.class.name == "Call" %>
-      <div style="border: 5px solid black; margin-bottom: 10px;">
-        CALL FOR<br>
-        VOLUNTEERS<br>
-        Event: <strong><%= news.event %></strong><br>
-        Date: <strong><%= news.time %></strong><br>
-        Time: <strong><%= news.date %></strong><br>
-        Venue: <strong><%= news.venue %></strong>
+      <div class="grid-item grid-newsboard-item">
+        <% if user_signed_in? %> <!-- IF ADMIN -->
+          <%= link_to news, method: :delete, data: { confirm: 'Are you sure?' }, style: "outline:none; text-decoration: none; background-color:white; position:absolute;" do %>
+            <%= image_tag "delete_post_button-15.png", style: "height: 50px; margin-top: -95px; margin-left: -65px;", class: "delete-link" %>
+          <% end %>
+        <% end %>
+        <h1 style="margin: 0; font-family: 'Roboto', sans-serif; font-weight:bold; font-size: 81px;  color:black;">CALL FOR</h1>
+        <h1 style="margin: 0;font-family: 'Roboto', sans-serif; font-weight:bold; font-size: 60px; color:black;">VOLUNTEERS</h1>
+        <p class="grid-info" style="margin: 0; margin-top: 20px;">Event: <span class="call-info newsboard-highlight"><%= news.event %></span></p>
+        <p class="grid-info" style="margin: 0;">Date: <span class="call-info newsboard-highlight"><%= news.date %></span></p>
+        <p class="grid-info" style="margin: 0;">Time: <span class="call-info newsboard-highlight"><%= news.time %></span></p>
+        <p class="grid-info" style="margin: 0;">Venue: <span class="call-info newsboard-highlight"><%= news.venue %></span></p>
       </div>
     <% elsif news.class.name == "Survey" %>
-      <div style="border: 5px solid black; margin-bottom: 10px;">
-        SURVEY<br>
-        <%= news.write_up %><br>
-        <strong><%= news.link %></strong>
+      <div class="grid-item grid-newsboard-item">
+        <% if user_signed_in? %> <!-- IF ADMIN -->
+          <%= link_to news, method: :delete, data: { confirm: 'Are you sure?' }, style: "outline:none; text-decoration: none; background-color:white; position:absolute;" do %>
+            <%= image_tag "delete_post_button-15.png", style: "height: 50px; margin-top: -95px; margin-left: -65px;", class: "delete-link" %>
+          <% end %>
+        <% end %>
+        <h1 style="margin: 0; font-family: 'Roboto', sans-serif; font-weight:bold; font-size: 85px;  color:black;">SURVEY</h1>
+        <p class="grid-info" style="margin: 0; margin-top: 20px;"><%= news.write_up.gsub(/\n/, '<br/>').html_safe %></p>
+        <p class="grid-info" style="margin: 0; margin-top: 20px; font-family: 'Roboto Slab', serif; font-weight:bold;"><span class="call-info newsboard-highlight"><%= news.link %></span></p>
       </div>
     <% elsif news.class.name == "Announcement" %>
-      <div style="border: 5px solid black; margin-bottom: 10px;">
-        ANNOUNCEMENT<br>
-        <strong><%= news.title %></strong><br>
-        <%= news.write_up %>
+      <div class="grid-item grid-newsboard-item">
+        <% if user_signed_in? %> <!-- IF ADMIN -->
+          <%= link_to news, method: :delete, data: { confirm: 'Are you sure?' }, style: "outline:none; text-decoration: none; background-color:white; position:absolute;" do %>
+            <%= image_tag "delete_post_button-15.png", style: "height: 50px; margin-top: -95px; margin-left: -65px;", class: "delete-link" %>
+          <% end %>
+        <% end %>
+        <h1 style="margin: 0; font-family: 'Roboto', sans-serif; font-weight:bold; font-size: 48px;  color:black;">ANNOUNCEMENT</h1>
+        <p class="grid-info" style="margin: 0; margin-top: 20px;"><%= news.write_up.gsub(/\n/, '<br/>').html_safe %></p>
       </div>
     <% else %> <!-- IF POLL -->
-      <div style="border: 5px solid black; margin-bottom: 10px;">
-        POLL<br>
-        <%= news.information %>
-        <button id="btn-show-poll<%= news.id %>" class="btn-show-poll" onclick="show_poll(this)">Click here to view entire poll</button>
-
-        <!-- DIV FOR SHOWING POLL -->
-        <div id="show-poll<%= news.id %>" class="show-poll">
-          Information<br>
-          <div style="border: 5px solid black; margin-bottom: 10px;">
-            <%= news.information %>
-          </div>
+      <div class="grid-item grid-newsboard-item">
+        <% if user_signed_in? %> <!-- IF ADMIN -->
+          <%= link_to news, method: :delete, data: { confirm: 'Are you sure?' }, style: "outline:none; text-decoration: none; background-color:white; position:absolute;" do %>
+            <%= image_tag "delete_post_button-15.png", style: "height: 50px; margin-top: -95px; margin-left: -65px;", class: "delete-link" %>
+          <% end %>
+        <% end %>
+        <h1 style="margin: 0; font-family: 'Roboto', sans-serif; font-weight:bold; font-size: 100px;  color:black;">POLL</h1>
+        <p class="grid-info" style="margin: 0; margin-top: 20px;"><%= news.information %></p>
+        <p class="grid-info" style="margin: 0; margin-top: 20px; font-family: 'Roboto Slab', serif; font-weight:bold; cursor: pointer; cursor: hand;"><span class="call-info newsboard-highlight" id="btn-show-poll<%= news.id %>" onclick="show_poll(this)">Click here to view entire poll</span></p>
+        
+        <!-- poll menu -->
+        <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right cbp-spmenu-post" id="cbp-spmenu-poll<%= news.id %>">
+          <button id="cbp-spmenu-poll-close<%= news.id %>" class="btn-close" onclick="hide_poll(this)"><%= image_tag 'exit_button-15.png', style: "background-color:#FCB800; height: 50px;" %></button>
+          <div style="margin-top: 11vh; font-family: 'Roboto', sans-serif; font-weight:bold; font-size: 100px; color:black;">POLL</div>
+            <div style="margin-top: 10vh; font-family: 'Roboto Slab', serif; font-weight:bold; font-size: 35px; line-height: 30px; color:black;">Information</div>
+            <div style="margin-top: 1.5vh; padding: 30px; background-color: #F1F1F2; border: black solid 5px;">
+              <p class="grid-info" style="font-size: 20px; line-height: 25px; letter-spacing: 0px;"><%= news.information %></p>
+            </div>
             <% total_votes = 0 %>
             <% news.choices.each do |choice| %>
               <% total_votes += choice.votes %>
             <% end %>
             <% news.choices.each do |choice| %>
               <%= form_for(choice, html: {method: "patch"}) do %>
-                <input name="poll-vote" type="radio" value=<%= choice.id%> onclick="submit()">
-              <%= choice.name %>
-                <% if total_votes != 0 %>
-                  <% percentage = choice.votes.to_f/total_votes %>
-                  <%= percentage*100 == (percentage*100).to_i ? (percentage*100).to_i : (percentage*100).round(2) %>%
-                <% else %>
-                  0%
-                <% end %>
+                 <div class="row" style="margin:0; padding:0; margin-top: 2vh;">
+                  <div class="col-sm-2" style="margin:0; padding:0;">
+                    <button class="button" type="submit" name="poll-vote" value=<%= choice.id%>><span></span></button>
+                  </div>
+                  <div class="col-sm-10" style="margin:0; padding:0;">
+                    <div style="padding-bottom: 0px; background-color: #F1F1F2; border: black solid 5px; width: 96%; float:right; height: 53px; padding: 5px 15px;">
+                      <p class="grid-info" style="font-size: 20px; letter-spacing: 0px; margin: 0;"><%= choice.name %><span style="float:right;">
+                        <% if total_votes != 0 %>
+                          <% percentage = choice.votes.to_f/total_votes %>
+                          <span class="more-highlight"><%= percentage*100 == (percentage*100).to_i ? (percentage*100).to_i : (percentage*100).round(2) %>%</span>
+                        <% else %>
+                          0%
+                        <% end %>
+                      </span>
+                      </p>
+                    </div>
+                  </div>
+                 </div>
               <% end %>
             <% end %>
-          
-          Deadline<br>
-          <div style="border: 5px solid black; margin-bottom: 10px;">
-            <%= news.deadline %>
-          </div>
-        </div>
-        <!-- END DIV FOR SHOWING POLL -->
+            <div style="margin-top: 4vh; font-family: 'Roboto Slab', serif; font-weight:bold; font-size: 35px; line-height: 30px; color:black;">Deadline</div>
+            <div style="margin-top: 1.5vh; padding: 10px; padding-bottom: 2px; background-color: #F1F1F2; border: black solid 5px;">
+              <p class="grid-info" style="font-size: 20px; line-height: 25px; letter-spacing: 0px;"><span class="more-highlight"><%= news.deadline %></span></p>
+            </div>
+        </nav>
+        <!-- end of poll menu -->
       </div>
     <% end %>
   <% end %>
 </div>
 
+</body>
 
+<script src="assets/javascripts/masonry.js"></script>
 <script>
-function show_poll(element){
-  $(".show-poll").hide();
-  var count = element.id.slice(-1);
-  $("#show-poll"+count).show();//('slide', {direction: 'left'}, 500);
-}
+  $(document).ready(function(){
+    $('.grid').masonry({
+      itemSelector: '.grid-item',
+      // columnWidth: 160
+    });
 
-$(document).ready(function(){
-// $( "#toggle" ).toggle( "slide" );
-  $(".panel-right").hide();
-  $(".panel-left").hide();
-
-  $("#btn-menu").click(function(){
-    $("#btn-menu").hide();
-    $(".panel-right").hide();
-    $("#btn-post").show('slide', {direction: 'right'}, 500);
-    $("#menu-options").show('slide', {direction: 'left'}, 500);
   });
+</script>
+<script src="assets/javascripts/classie.js"></script>
+<script>
+  var hamburgerMenu = document.getElementById( 'cbp-spmenu-hamburger' ),
+      megaphoneMenu = document.getElementById( 'cbp-spmenu-megaphone' ),
+      pencilMenu = document.getElementById( 'cbp-spmenu-pencil' ),
+      newReportMenu = document.getElementById('cbp-spmenu-new-report'),
+      newPetitionMenu = document.getElementById('cbp-spmenu-new-petition'),
+      newPollMenu = document.getElementById('cbp-spmenu-new-poll'),
+      newAnnouncementMenu = document.getElementById( 'cbp-spmenu-new-announcement' ),
+      newCallMenu = document.getElementById( 'cbp-spmenu-new-call' ),
+      newSurveyMenu = document.getElementById( 'cbp-spmenu-new-survey' ),
+      showHamburgerMenu = document.getElementById( 'showHamburgerMenu' ),
+      showMegaphoneMenu = document.getElementById( 'showMegaphoneMenu' ),
+      showPencilMenu = document.getElementById( 'showPencilMenu' ),
+      showNewReportMenu = document.getElementById( 'btn-new-report' ),
+      showNewPetitionMenu = document.getElementById( 'btn-new-petition' ),
+      showNewPollMenu = document.getElementById( 'btn-new-poll' ),
+      showNewAnnouncementMenu = document.getElementById( 'btn-new-announcement' ),
+      showNewCallMenu = document.getElementById( 'btn-new-call' ),
+      showNewSurveyMenu = document.getElementById( 'btn-new-survey' ),
+      hideHamburgerMenu = document.getElementById('cbp-spmenu-hamburger-close'),
+      hideMegaphoneMenu = document.getElementById('cbp-spmenu-megaphone-close'),
+      hidePencilMenu = document.getElementById('cbp-spmenu-pencil-close'),
+      hideNewReportMenu = document.getElementById('cbp-spmenu-new-report-close'),
+      hideNewPetitionMenu = document.getElementById('cbp-spmenu-new-petition-close'),
+      body = document.body;
 
-  $("#btn-post").click(function(){
-    $("#btn-post").hide();
-    $(".panel-left").hide();
-    $("#btn-menu").show('slide', {direction: 'left'}, 500);
-    $("#post-options").show('slide', {direction: 'right'}, 500);
-  });
+  showHamburgerMenu.onclick = function() {
+    //classie.toggle( this, 'active' );
+    classie.toggle( body, 'cbp-spmenu-push-toright' );
+    classie.toggle( hamburgerMenu, 'cbp-spmenu-open' );
+  };
+  showMegaphoneMenu.onclick = function() {
+    //classie.toggle( this, 'active' );
+    classie.toggle( body, 'cbp-spmenu-push-toleft' ); //hide/show hamburger
+    classie.toggle( megaphoneMenu, 'cbp-spmenu-open' ); //hide/show right panel
+  };
+  showPencilMenu.onclick = function() {
+    //classie.toggle( this, 'active' );
+    classie.toggle( body, 'cbp-spmenu-push-toright' );
+    classie.toggle( pencilMenu, 'cbp-spmenu-open' );
+  };
+  hideHamburgerMenu.onclick = function(){
+    classie.toggle( body, 'cbp-spmenu-push-toright' ); //hide/show megaphone
+    classie.toggle( hamburgerMenu, 'cbp-spmenu-open' ); //hide/show left panel
+  };
+  hideMegaphoneMenu.onclick = function(){
+    classie.toggle( body, 'cbp-spmenu-push-toleft' );
+    classie.toggle( megaphoneMenu, 'cbp-spmenu-open' );
+  };
+  hidePencilMenu.onclick = function(){
+    classie.toggle( body, 'cbp-spmenu-push-toright' ); //hide/show megaphone
+    classie.toggle( pencilMenu, 'cbp-spmenu-open' ); //hide/show left panel
+  };
+  showNewReportMenu.onclick = function(){
+    classie.toggle( newReportMenu, 'cbp-spmenu-open');
+  };
+  hideNewReportMenu.onclick = function(){
+    classie.toggle( newReportMenu, 'cbp-spmenu-open' );
+  };
+  showNewPetitionMenu.onclick = function(){
+    classie.toggle( newPetitionMenu, 'cbp-spmenu-open');
+  };
+  hideNewPetitionMenu.onclick = function(){
+    classie.toggle( newPetitionMenu, 'cbp-spmenu-open' );
+  };
 
-  $("#btn-petition").click(function(){
-    $(".panel-right").hide();
-    $("#petition-new").show('slide', {direction: 'right'}, 500);
-  });
-  
-  $("#btn-report").click(function(){
-    $(".panel-right").hide();
-    $("#report-new").show('slide', {direction: 'right'}, 500);
-  });
+  showNewPollMenu.onclick = function(){
+    classie.toggle( pencilMenu, 'cbp-spmenu-open');
+    classie.toggle( body, 'cbp-spmenu-push-toleft');
+    classie.toggle( newPollMenu, 'cbp-spmenu-open');
+  };
+  hideNewPollMenu.onclick = function(){
+    classie.toggle( body, 'cbp-spmenu-push-toright');
+    classie.toggle( body, 'cbp-spmenu-push-toleft');
+    classie.toggle( newPollMenu, 'cbp-spmenu-open' );
+  };
+  showNewAnnouncementMenu.onclick = function(){
+    classie.toggle( pencilMenu, 'cbp-spmenu-open');
+    classie.toggle( body, 'cbp-spmenu-push-toleft');
+    classie.toggle( newAnnouncementMenu, 'cbp-spmenu-open');
+  };
+  hideNewAnnouncementMenu.onclick = function(){
+    classie.toggle( body, 'cbp-spmenu-push-toright');
+    classie.toggle( body, 'cbp-spmenu-push-toleft');
+    classie.toggle( newAnnouncementMenu, 'cbp-spmenu-open' );
+  };
+  showNewCallMenu.onclick = function(){
+    classie.toggle( pencilMenu, 'cbp-spmenu-open');
+    classie.toggle( body, 'cbp-spmenu-push-toleft');
+    classie.toggle( newCallMenu, 'cbp-spmenu-open');
+  };
+  hideNewCallMenu.onclick = function(){
+    classie.toggle( body, 'cbp-spmenu-push-toright');
+    classie.toggle( body, 'cbp-spmenu-push-toleft');
+    classie.toggle( newCallMenu, 'cbp-spmenu-open' );
+  };
+  showNewSurveyMenu.onclick = function(){
+    classie.toggle( pencilMenu, 'cbp-spmenu-open');
+    classie.toggle( body, 'cbp-spmenu-push-toleft');
+    classie.toggle( newSurveyMenu, 'cbp-spmenu-open');
+  };
+  hideNewSurveyMenu.onclick = function(){
+    classie.toggle( body, 'cbp-spmenu-push-toright');
+    classie.toggle( body, 'cbp-spmenu-push-toleft');
+    classie.toggle( newSurveyMenu, 'cbp-spmenu-open' );
+  };
 
-  $("#post-options-btn-close").click(function(){
-    $("#post-options").hide();
-    $("#btn-post").show('slide', {direction: 'left'}, 500);
-  });
-
-  $("#menu-options-btn-close").click(function(){
-    $("#menu-options").hide();
-    $("#btn-menu").show('slide', {direction: 'left'}, 500);
-  });
-
-  $("#report-new-btn-close").click(function(){
-    $("#report-new").hide();
-    $("#btn-post").show('slide', {direction: 'right'}, 500);
-  });
-
-  $("#petition-new-btn-close").click(function(){
-    $("#petition-new").hide();
-    $("#btn-post").show('slide', {direction: 'right'}, 500);
-  });
-
-  $(".show-poll").hide();
-
-  $("#newsboard-post-options-btn-close").click(function(){
-    $("#newsboard-post-options").hide();
-    $("#btn-menu").show('slide', {direction: 'left'}, 500);
-    $("#btn-newsboard-post").show('slide', {direction: 'left'}, 500);
-  });
-
-  $("#btn-newsboard-post").click(function(){
-    $(".btn-left").hide();
-    $(".panel-left").hide();
-    $(".panel-right").hide();
-    $("#btn-post").show('slide', {direction: 'right'}, 500);
-    $("#newsboard-post-options").show('slide', {direction: 'left'}, 500);
-  });
-
-  $("#btn-announcement").click(function(){
-    $(".panel-left").hide();
-    $(".panel-right").hide();
-    $("#btn-post").hide();
-    $(".btn-left").show('slide', {direction: 'right'}, 500);
-    $("#announcement-new").show('slide', {direction: 'right'}, 500);
-  });
-
-  $("#btn-poll").click(function(){
-    $(".panel-left").hide();
-    $(".panel-right").hide();
-    $("#btn-post").hide();
-    $(".btn-left").show('slide', {direction: 'right'}, 500);
-    $("#poll-new").show('slide', {direction: 'right'}, 500);
-  });
-
-  $("#btn-survey").click(function(){
-    $(".panel-left").hide();
-    $(".panel-right").hide();
-    $("#btn-post").hide();
-    $(".btn-left").show('slide', {direction: 'right'}, 500);
-    $("#survey-new").show('slide', {direction: 'right'}, 500);
-  });
-
-  $("#btn-call").click(function(){
-    $(".panel-left").hide();
-    $(".panel-right").hide();
-    $("#btn-post").hide();
-    $(".btn-left").show('slide', {direction: 'right'}, 500);
-    $("#call-new").show('slide', {direction: 'right'}, 500);
-  });
-
-});
-
+  function show_poll(element){
+    var count = element.id.slice(13);
+    classie.remove( body, 'cbp-spmenu-push-toleft' );
+    classie.add( body, 'cbp-spmenu-push-toleft' );
+    classie.add( document.getElementById('cbp-spmenu-poll'+count), 'cbp-spmenu-open');
+  }
+  function hide_poll(element){
+    var count = element.id.slice(21);
+    classie.remove( document.getElementById('cbp-spmenu-poll'+count), 'cbp-spmenu-open');
+    if (document.getElementsByClassName('cbp-spmenu-open').length == 0){
+      classie.remove( body, 'cbp-spmenu-push-toleft' );
+    }
+  }
 </script>

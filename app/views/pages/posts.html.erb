@@ -1,295 +1,301 @@
-<div class="row">
-  <div class="col-xs-2">
-    <button id="btn-menu" style="border:none; height: 100px; width: 100px; background-color:#FCB800;"><%= image_tag 'main_menu_icon-15.png', style: "background-color:#FCB800; height: 50px;" %></button>
-    <div id="menu-options" class="panel panel-left">
-      <button id="menu-options-btn-close" class="btn-close"><%= image_tag 'exit_button-15.png', style: "background-color:#FCB800; height: 50px;" %></button>
-      <br>
-      <%= link_to 'Reports', posts_path(code: 'pie'), id: 'btn-reports', class: 'btn-panel', style: 'margin-top: 15vh;' %><br>
-      <%= link_to 'Newsboard', newsboard_path, id: 'btn-newsboard', class: 'btn-panel'%><br>
-      <%= link_to 'About', about_path, id: 'btn-about', class: 'btn-panel' %><br>
-      <% if user_signed_in? %>
-        <%= link_to "Sign out", destroy_user_session_path, :method => :delete, class: 'btn-panel' %>
-      <% end %>
-    </div>
-
-  </div>
-  <div class="col-xs-8">
-    REPORTS
-  </div>
-  <div class="col-xs-2">
-    <button id="btn-post" style="border:none; height: 100px; width: 100px; background-color:#FCB800; float:right;"><%= image_tag 'main_menu_icon-15.png', style: "background-color:#FCB800; height: 50px;" %></button>
-    <div id="post-options" class="panel panel-right">
-      <button id="post-options-btn-close" class="btn-close"><%= image_tag 'exit_button-15.png', style: "background-color:#FCB800; height: 50px;" %></button>
-      <br>
-      <button id="btn-report" class='btn-panel' style='margin-top: 15vh; text-align:left;'>Report</button>
-      <button id="btn-petition" class='btn-panel' style="margin-top: 3vh; text-align: left;">Petition</button>
-    </div>
-    <div id="report-new" class="panel panel-right">
-      <button id="report-new-btn-close" class="btn-close"><%= image_tag 'exit_button-15.png', style: "background-color:#FCB800; height: 50px;" %></button>
-      <br>
-      <%= render 'reports/form' %>
-    </div>
-    <div id="petition-new" class="panel panel-right">
-      <button id="petition-new-btn-close" class="btn-close"><%= image_tag 'exit_button-15.png', style: "background-color:#FCB800; height: 50px;" %></button>
-      <br>
-      <%= render 'petitions/form' %>
-    </div>
-  </div>
-</div>
-
-<form action="/posts">
-  <%= hidden_field_tag 'code', 'pie' %>
-  <input name="query" type="text">
-  <input type="submit" class="hidden">
-</form>
-
-<form action="/posts" style="width: 10vw;">
-  <%= hidden_field_tag 'code', 'pie' %>
-  <%= select_tag("sort", options_for_select([["All posts",'all'],["Reports only",'reports'],["Petitions only",'petitions']]), :prompt => "Sort posts...", :onchange => "this.form.submit()",:class=>"form-control") %>
-</form>
+<style src="assets/stylesheets/slidemenu.css.scss"></style>
+<style src="assets/stylesheets/masonry.css.scss"></style>
 
 
-<div>
+
+
+<body class="cbp-spmenu-push" id="pg-posts" style="height: 100vh; overflow-y:auto;">
+  
+  <!-- navbar -->
+  <%= render 'pages/navbar' %>
+
+  <h1 class="pg-title" style="margin-left: 190px; font-family: 'Roboto', sans-serif; font-weight:bold; font-size: 90px; margin-top: -52px; color:black;">Reports</h1>
+
+  <!-- sort posts -->
+ <form action="/posts">
+    <%= hidden_field_tag 'code', 'pie' %>
+    <select id="sort" name="sort" onchange="this.form.submit()" class="form-panel" style="background-color:#F1F1F2; width: 250px; border-radius: 0; float:right; margin-top: -25px; margin-right: 40px; font-weight: 300;" >
+      <option value="" selected disabled class="text-hide">Sort posts...</option>
+      <option value="all" class="sort-option" style="border-bottom: 4px solid black; border-left: 4px solid black; border-right: 4px solid black;">All posts</option>
+      <option value="reports" class="sort-option" style="border-bottom: 4px solid black; border-left: 4px solid black; border-right: 4px solid black;">Reports only</option>
+      <option value="petitions" class="sort-option" style="border-bottom: 2px solid black; border-left: 4px solid black; border-right: 4px solid black;">Petitions only</option>
+    </select>
+  </form>
+  <!-- end of sort posts -->
+
+  <!-- search box -->
+  <form action="/posts">
+    <%= hidden_field_tag 'code', 'pie' %>
+    <input name="query" id="input-search" type="text" placeholder="Search tags..." class="form-panel" style="background-color:#F1F1F2; width: 250px; font-weight: 300; float:right; margin-top: -25px; margin-right: 35px;">
+    <input type="submit" class="hidden">
+  </form>
+  <!-- end of search box -->
+
+
+<div class="grid" >
   <% @posts.each do |post| %>
     <% if post.class.name == "Report" %> <!-- IF REPORT -->
-      <% if user_signed_in? %> <!-- IF ADMIN -->
-        <%= link_to post, method: :delete, data: { confirm: 'Are you sure?' }, style: "outline:none; text-decoration: none; background-color:white;" do %> <!-- THIS NEEDS TO BE BEFORE THE show-report or show-petition DIV -->
-          <%= image_tag "delete_post_button-15.png", style: "height: 50px; margin-bottom: -30px;", class: "delete-link" %>
+      <div class="grid-item">
+        <% if user_signed_in? %> <!-- IF ADMIN -->
+          <%= link_to post, method: :delete, data: { confirm: 'Are you sure?' }, style: "outline:none; text-decoration: none; background-color:white; position:absolute;" do %>
+            <%= image_tag "delete_post_button-15.png", style: "height: 50px; margin-top: -70px; margin-left: -50px;", class: "delete-link" %>
+          <% end %>
         <% end %>
-      <% end %>
-      <a href="#" class="report-container" style="outline: none;">
-        <div style="border: 5px solid black; margin-bottom: 10px; margin-left: 20px;" id="btn-show-report<%= post.id %>" class="btn-show-report" onclick="show_report(this)">
-          <div style="margin-left: 25px;">
-            <%= post.write_up %><br>
+        <div style="margin:0; padding:0; cursor: pointer; cursor: hand;" id="btn-report<%= post.id %>" onclick="show_report(this);">
+          <% if post.photo.present? %>
+            <center><%= image_tag post.photo.url(:medium)%></center>
+            <p class="grid-info" style="margin-top: 30px;"><%= post.write_up %></p>
+          <% else %>
+            <p class="grid-info"><%= post.write_up %></p>
+          <% end %>
+          <% post.tags.each do |tag| %>
+            <span class="grid-info" style="font-size: 20px;">#<%= tag.name %></span>
+          <% end %>
+          <% if post.tags.count > 0 %>
+            <br>
+          <% end %>
+          <% if post.noted %>
+            <% if user_signed_in? %>
+              <%= form_for(post, html: {method: "patch"}) do %>
+                <input name="btn-noted" value="false" class="hidden">
+                <input type="image" src="/assets/already_noted_icon-15.png" onclick="event.stopPropagation();" style="height: 40px; outline: none; position:absolute; cursor: pointer; cursor: hand; margin-top: 10px; margin-left: 265px;">
+              <% end %>
+            <% else %>
+              <img src="/assets/noted_seal_icon-15.png" style="height: 100px; opacity: 0.4; position:absolute; margin-top: -60px; margin-left: 180px;">
+            <% end %>
+          <% else %>
+            <% if user_signed_in? %>
+              <%= form_for(post, html: {method: "patch"}) do %>
+                <input name="btn-noted" value="true" class="hidden">
+                <input type="image" src="/assets/note_button-15.png" onclick="event.stopPropagation();" style="height: 40px; outline: none; position:absolute; cursor: pointer; cursor: hand; margin-top: 10px; margin-left: 265px;">
+              <% end %>
+            <% end %>
+          <% end %>
+          <span style="font-family: 'Roboto Slab', serif; font-weight:bold; font-size: 32px; line-height: 30px; color:black;"><%= post.name %>, <%= post.age %></span>
+        </div>
+      </div>
+
+      <!-- show report menu -->
+      <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right cbp-spmenu-post" id="cbp-spmenu-report<%= post.id %>" style="padding-left: 0; padding-right: 0; padding-bottom: 0;">
+        <div style="height:105px; border-bottom: 3px solid #5C676D;">
+          <button id="cbp-spmenu-report-close<%= post.id %>" class="btn-close" onclick="hide_report(this)"><%= image_tag 'exit_button-15.png', style: "background-color:#FCB800; height: 50px; padding-left: 30px;" %></button>
+        </div>
+        <div style="height: 44vh; overflow-y: auto;">
+          <div style="margin: 30px; padding: 30px; background-color: #F1F1F2; border: black solid 5px;">
+            <p class="grid-info"><%= post.write_up %></p>
             <% post.tags.each do |tag| %>
-              #<%= tag.name %> 
+              <span class="grid-info" style="font-size: 18px;">#<%= tag.name %></span>
             <% end %>
             <% if post.tags.count > 0 %>
               <br>
             <% end %>
-            <strong><%= post.name %>, <%= post.age %></strong>
-            <% if post.noted %>
-              <% if user_signed_in? %>
-                <%= form_for(post, html: {method: "patch"}) do %>
-                  <input name="btn-noted" value="false" class="hidden">
-                  <input type="image" src="/assets/already_noted_icon-15.png" onclick="event.stopPropagation();" style="height: 50px; outline: none;">
-                <% end %>
-              <% else %>
-                <img src="/assets/noted_seal_icon-15.png" style="height: 50px;">
-              <% end %>
-            <% else %>
-              <% if user_signed_in? %>
-                <%= form_for(post, html: {method: "patch"}) do %>
-                  <input name="btn-noted" value="true" class="hidden">
-                  <input type="image" src="/assets/note_button-15.png" onclick="event.stopPropagation();" style="height: 50px; outline: none;">
-                <% end %>
-              <% end %>
-            <% end %>
+            <span style="font-family: 'Roboto Slab', serif; font-weight:bold; font-size: 30px; line-height: 30px; color:black;"><%= post.name %>, <%= post.age %></span>
           </div>
 
-          <!-- DIV FOR SLIDE OUT WHEN CLICKING REPORT -->
-
-          <div id="show-report<%= post.id %>" class="show-post"> 
-
-            <div style="border: 5px solid black; margin-bottom: 10px;">
-              <%= post.write_up %><br>
-              <% post.tags.each do |tag| %>
-                #<%= tag.name %> 
-              <% end %>
-              <% if post.tags.count > 0 %>
-                <br>
-              <% end %>
-              <strong><%= post.name %>, <%= post.age %></strong>
+          <% post.comments.each do |comment| %>
+            <div style="margin: 30px; padding: 30px; background-color: #F1F1F2; border: black solid 5px;">
+              <p class="grid-info" style="font-size: 21px; line-height: 25px; padding-bottom: 15px;"><%= comment.write_up %></p>
+              <span style="font-family: 'Roboto Slab', serif; font-weight:bold; font-size: 21px; line-height: 30px; color:black;;"><%= comment.name %>, <%= comment.age %></span>
             </div>
-
-            <% post.comments.each do |comment| %>
-              <div style="border: 5px solid black; margin-bottom: 10px;">
-                <%= comment.write_up %><br>
-                <strong><%= comment.name %>, <%= comment.age %></strong>
-              </div>
-            <% end %>
-
-            <div style="border: 5px solid black; margin-bottom: 10px;">
-              <% @comment = Comment.new %>
-              <%= form_for(@comment) do |f| %>
-                <div class="field">
-                  <%= f.text_area :write_up, placeholder: "Type here..."%>
-                </div>
-                <div class="field">
-                  <%= f.text_field :name, placeholder: "Name..."%>
-                </div>
-                <div class="field">
-                  <%= f.number_field :age, placeholder: "Age..."%>
-                </div>
-                <div class="field">
-                  <%= f.hidden_field :report_id, :value=>post.id %>
-                </div>
-                <div class="actions">
-                  <%= f.submit 'Reply'%>
-                </div>
-              <% end %>
-            </div>
-
-          </div>
-
-          <!-- END DIV FOR SLIDE OUT WHEN CLICKING REPORT -->
-
+          <% end %>
         </div>
-      </a>
-    <% else %> <!-- IF PETITION -->
-      <% if user_signed_in? %> <!-- IF ADMIN -->
-        <%= link_to post, method: :delete, data: { confirm: 'Are you sure?' }, style: "outline:none; text-decoration: none; background-color:white; " do %> <!-- THIS NEEDS TO BE BEFORE THE show-report or show-petition DIV -->
-          <%= image_tag "delete_post_button-15.png", style: "height: 50px; margin-bottom: -30px;", class: "delete-link" %>
+
+        <div style="border-top: 3px solid #5C676D; padding-left: 30px; padding-right: 30px; padding-top: 30px; margin-top: 30px;">
+          <% @comment = Comment.new %>
+          <%= form_for(@comment) do |f| %>
+            <div class="field">
+              <%= f.text_field :write_up, placeholder: "Type here...", class: 'form-panel' %>
+            </div>
+            <div class="field">
+              <%= f.text_field :name, placeholder: "Name...", class: 'form-panel'%>
+            </div>
+            <div class="field">
+              <%= f.number_field :age, placeholder: "Age...", class: 'form-panel'%>
+            </div>
+            <div class="field">
+              <%= f.hidden_field :report_id, :value=>post.id, class: 'form-panel' %>
+            </div>
+            <div class="actions">
+              <%= f.submit 'Reply', class: 'form-panel form-submit' %>
+            </div>
+          <% end %>
+        </div>
+              
+      </nav>
+      <!-- end of show report menu -->
+
+    <% else %> <!-- petitions -->
+      <div class="grid-item" style="border: 5px solid #FCB800;">
+        <% if user_signed_in? %> <!-- IF ADMIN -->
+          <%= link_to post, method: :delete, data: { confirm: 'Are you sure?' }, style: "outline:none; text-decoration: none; background-color:white; " do %> <!-- THIS NEEDS TO BE BEFORE THE show-report or show-petition DIV -->
+            <%= image_tag "delete_post_button-15.png", style: "height: 50px; position:absolute; margin-top: -50px; margin-left: -50px;", class: "delete-link" %>
+          <% end %>
         <% end %>
-      <% end %>
-      <a href="#" class="report-container" style="outline: none;">
-        <div style="border: 5px solid #FCB800; color:black;  margin-bottom: 10px; margin-left: 20px;" id="btn-show-petition<%= post.id %>" class="btn-show-petition" onclick="show_petition(this)">
-          <div style="margin-left: 25px;">
-            <%= post.write_up %><br>
-            <button id="btn-sign-petition<%= post.id %>" class="btn-sign-petition" onclick="sign_petition(event, this)">Sign petition here...</button>
-            <% if post.noted %>
-              <% if user_signed_in? %>
-                <%= form_for(post, html: {method: "patch"}) do %>
-                  <input name="btn-noted" value="false" class="hidden">
-                  <input type="image" src="/assets/already_noted_icon-15.png" onclick="event.stopPropagation();" style="height: 50px; outline: none;">
-                <% end %>
-              <% else %>
-                <img src="/assets/noted_seal_icon-15.png" style="height: 50px;">
-              <% end %>
-            <% else %>
-              <% if user_signed_in? %>
-                <%= form_for(post, html: {method: "patch"}) do %>
-                  <input name="btn-noted" value="true" class="hidden">
-                  <input type="image" src="/assets/note_button-15.png" onclick="event.stopPropagation();" style="height: 50px; outline: none;">
-                <% end %>
-              <% end %>
+        <p class="grid-info"><%= post.write_up.to_s[0..250] %><span id="btn-show-petition<%=post.id %>" class="btn-show-petition" onclick="show_petition(this);" style="cursor: pointer; cursor: hand;">...<span class="more-highlight">[more]</span></span></p>
+        <button id="btn-sign-petition<%= post.id %>" class="btn-sign-petition" onclick="show_sign_petition(this);" style="background: transparent; border:none; outline:none; text-align:left; margin-left: -7px; margin-top: 2vh;"><span style="font-family: 'Roboto Slab', serif; font-weight:bold; font-size: 32px; line-height: 30px; color:black;"><span class="highlight">Sign the</span><br><span class="highlight">petition</span><br><span class="highlight">here</span></span>
+        </button>
+        <% if post.noted %>
+          <% if user_signed_in? %>
+            <%= form_for(post, html: {method: "patch"}) do %>
+              <input name="btn-noted" value="false" class="hidden">
+              <input type="image" src="/assets/already_noted_icon-15.png" onclick="event.stopPropagation();" style="height: 40px; outline: none; position:absolute; cursor: pointer; cursor: hand; margin-top: -20px; margin-left: 265px;">
             <% end %>
-          </div>
-
-          <!-- DIV FOR SLIDE OUT WHEN CLICKING PETITION -->
-
-          <div id="show-petition<%= post.id %>" class="show-post">
-
-            <div style="border: 5px solid black; margin-bottom: 10px;">
-              <%= post.signatures.count %> out of 300<br>
-            </div>
-
-            <div style="border: 5px solid black; margin-bottom: 10px;">
-              <%= post.write_up %>
-              <button id="btn-sign-petition<%= post.id %>" class="btn-sign-petition" onclick="sign_petition(event, this)">Sign petition here...</button>
-            </div>
-
-          </div> 
-
-          <!-- END DIV FOR SLIDE OUT WHEN CLICKING PETITION -->
-
-          <!-- DIV FOR SLIDE OUT WHEN SIGNING PETITION -->
-
-          <div id="sign-petition<%= post.id %>" class="show-post">
-            Sign the<br>Petition
-            <% @signature = Signature.new %>
-            <%= form_for(@signature) do |f| %>
-              <div class="field">
-                <%= f.text_field :name, placeholder: "Name...", onclick:"event.stopPropagation();"%>
-              </div>
-              <div class="field">
-                <%= f.number_field :age, placeholder: "Age...", onclick:"event.stopPropagation();"%>
-              </div>
-              <div class="field">
-                <%= f.text_field :email, placeholder: "Email...", onclick:"event.stopPropagation();" %>
-              </div>
-              <div class="field">
-                <%= f.hidden_field :petition_id, :value=>post.id %>
-              </div>
-              <div class="actions">
-                <%= f.submit 'Sign', onclick:"event.stopPropagation();"%>
-              </div>
+          <% else %>
+            <img src="/assets/noted_seal_icon-15.png" style="height: 100px; opacity: 0.4; position:absolute; margin-top: 30px; margin-left: 50px;">
+          <% end %>
+        <% else %>
+          <% if user_signed_in? %>
+            <%= form_for(post, html: {method: "patch"}) do %>
+              <input name="btn-noted" value="true" class="hidden">
+              <input type="image" src="/assets/note_button-15.png" onclick="event.stopPropagation();" style="height: 40px; outline: none; position:absolute; cursor: pointer; cursor: hand; margin-top: -20px; margin-left: 265px;">
             <% end %>
+          <% end %>
+        <% end %>
+
+        <!-- show petition menu -->
+        <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right cbp-spmenu-post" id="cbp-spmenu-show-petition<%= post.id %>">
+          <button id="cbp-spmenu-show-petition-close<%= post.id %>" class="btn-close" onclick="hide_petition(this)"><%= image_tag 'exit_button-15.png', style: "background-color:#FCB800; height: 50px;" %></button>
+          <div style="margin-top: 11vh; padding: 30px; background-color: #F1F1F2; border: black solid 5px; font-family: 'Roboto Slab', serif;">
+            <h1 style="font-weight: bold; font-size: 110px; margin: 0; margin-left: 12px;"><%= post.signatures.count %></h1>
+            <h1 style="font-weight: bold;font-size: 36px; margin: 0; margin-top: -15px;"><center>out of <span style="color: #FCB800;">300</center></span></h1>
           </div>
+          <div style="margin-top: 30px; padding: 30px; background-color: #F1F1F2; border: black solid 5px;">
+            <p class="grid-info"><%= post.write_up %></p>
+            <button id="btn-sign-petition<%= post.id %>" class="btn-sign-petition" onclick="show_sign_petition(this);" style="background: transparent; border:none; outline:none; text-align:left; margin-left: -7px; margin-top: 2vh;"><span style="font-family: 'Roboto Slab', serif; font-weight:bold; font-size: 30px; line-height: 30px; color:black;"><span class="highlight">Sign the</span><br><span class="highlight">petition</span></span>
+            </button>
+          </div>
+        </nav>
+       
+        <!-- end of show petition menu -->
 
-          <!-- END DIV FOR SLIDE OUT WHEN SIGNING PETITION -->
+        <!-- sign petition menu -->
 
-        </div>
-      </a>
+        <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right cbp-spmenu-post" id="cbp-spmenu-sign-petition<%= post.id %>">
+          <button id="cbp-spmenu-sign-petition-close<%= post.id %>" class="btn-close" onclick="hide_sign_petition(this)"><%= image_tag 'exit_button-15.png', style: "background-color:#FCB800; height: 50px;" %></button>
+          <div style="margin-top: 11vh; font-family: 'Roboto Slab', serif; font-weight:bold; font-size: 35px; line-height: 35px; color:black;">Sign the<br>Petition</div>
+          <% @signature = Signature.new %>
+          <%= form_for(@signature) do |f| %>
+            <div class="field">
+              <%= f.text_field :name, placeholder: "Name...", onclick:"event.stopPropagation();", class: 'form-panel', style: 'margin-top: 30px;'%>
+            </div>
+            <div class="field">
+              <%= f.number_field :age, placeholder: "Age...", onclick:"event.stopPropagation();", class: 'form-panel' %>
+            </div>
+            <div class="field">
+              <%= f.text_field :email, placeholder: "Email...", onclick:"event.stopPropagation();", class: 'form-panel'%>
+            </div>
+            <div class="field">
+              <%= f.hidden_field :petition_id, :value=>post.id %>
+            </div>
+            <div class="actions">
+              <%= f.submit 'Sign', onclick:"event.stopPropagation();", class: 'form-panel form-submit' %>
+            </div>
+          <% end %>
+        </nav>
+        <!-- end of sign petition menu -->
+      </div>
     <% end %>
   <% end %>
 </div>
 
+</body>
 
+<script src="assets/javascripts/masonry.js"></script>
 <script>
-function show_petition(element){
-  $(".show-post").hide();
-  var count = element.id.slice(-1);
-  $("#show-petition"+count).show();//('slide', {direction: 'left'}, 500);
-}
+  $(document).ready(function(){
+    $('.grid').masonry({
+      itemSelector: '.grid-item',
+      // columnWidth: 160
+    });
 
-function sign_petition(e, element){
-  $(".show-post").hide();
-  var count = element.id.slice(-1);
-  $("#sign-petition"+count).show();//('slide', {direction: 'left'}, 500);
-  var event = e || arguments[0] || window.event;
-  event.stopPropagation();
-}
-
-function show_report(element){
-  $(".show-post").hide();
-  var count = element.id.slice(-1);
-  $("#show-report"+count).show();//('slide', {direction: 'left'}, 500);
-}
-
-$(document).ready(function(){
-  // $( "#toggle" ).toggle( "slide" );
-  $(".panel-right").hide();
-  $(".panel-left").hide();
-
-  $("#btn-menu").click(function(){
-    $("#btn-menu").hide();
-    $(".panel-right").hide();
-    $("#btn-post").show('slide', {direction: 'right'}, 500);
-    $("#menu-options").show('slide', {direction: 'left'}, 500);
   });
+</script>
+<script src="assets/javascripts/classie.js"></script>
+<script>
+  var hamburgerMenu = document.getElementById( 'cbp-spmenu-hamburger' ),
+      megaphoneMenu = document.getElementById( 'cbp-spmenu-megaphone' ),
+      newReportMenu = document.getElementById('cbp-spmenu-new-report'),
+      newPetitionMenu = document.getElementById('cbp-spmenu-new-petition'),
+      showHamburgerMenu = document.getElementById( 'showHamburgerMenu' ),
+      showMegaphoneMenu = document.getElementById( 'showMegaphoneMenu' ),
+      showNewReportMenu = document.getElementById( 'btn-new-report' ),
+      showNewPetitionMenu = document.getElementById( 'btn-new-petition' ),
+      hideHamburgerMenu = document.getElementById('cbp-spmenu-hamburger-close'),
+      hideMegaphoneMenu = document.getElementById('cbp-spmenu-megaphone-close'),
+      hideNewReportMenu = document.getElementById('cbp-spmenu-new-report-close'),
+      hideNewPetitionMenu = document.getElementById('cbp-spmenu-new-petition-close'),
+      body = document.body;
 
-  $("#btn-post").click(function(){
-    $("#btn-post").hide();
-    $(".panel-left").hide();
-    $("#btn-menu").show('slide', {direction: 'left'}, 500);
-    $("#post-options").show('slide', {direction: 'right'}, 500);
-  });
+  showHamburgerMenu.onclick = function() {
+    //classie.toggle( this, 'active' );
+    classie.toggle( body, 'cbp-spmenu-push-toright' );
+    classie.toggle( hamburgerMenu, 'cbp-spmenu-open' );
+  };
+  showMegaphoneMenu.onclick = function() {
+    //classie.toggle( this, 'active' );
+    classie.toggle( body, 'cbp-spmenu-push-toleft' ); //hide/show hamburger
+    classie.toggle( megaphoneMenu, 'cbp-spmenu-open' ); //hide/show right panel
+  };
+  hideHamburgerMenu.onclick = function(){
+    classie.toggle( body, 'cbp-spmenu-push-toright' ); //hide/show megaphone
+    classie.toggle( hamburgerMenu, 'cbp-spmenu-open' ); //hide/show left panel
+  };
+  hideMegaphoneMenu.onclick = function(){
+    classie.toggle( body, 'cbp-spmenu-push-toleft' );
+    classie.toggle( megaphoneMenu, 'cbp-spmenu-open' );
+  };
+  showNewReportMenu.onclick = function(){
+    classie.toggle( newReportMenu, 'cbp-spmenu-open');
+  };
+  hideNewReportMenu.onclick = function(){
+    classie.toggle( newReportMenu, 'cbp-spmenu-open' );
+  };
+  showNewPetitionMenu.onclick = function(){
+    classie.toggle( newPetitionMenu, 'cbp-spmenu-open');
+  };
+  hideNewPetitionMenu.onclick = function(){
+    classie.toggle( newPetitionMenu, 'cbp-spmenu-open' );
+  };
 
-  $("#btn-petition").click(function(){
-    $(".panel-right").hide();
-    $("#petition-new").show('slide', {direction: 'right'}, 500);
-  });
+  function show_report(element){
+    var count = element.id.slice(10);
+    classie.remove( body, 'cbp-spmenu-push-toleft' );
+    classie.add( body, 'cbp-spmenu-push-toleft' );
+    classie.add( document.getElementById('cbp-spmenu-report'+count), 'cbp-spmenu-open');
+  }
+  function hide_report(element){
+    var count = element.id.slice(23);
+    classie.remove( document.getElementById('cbp-spmenu-report'+count), 'cbp-spmenu-open');
+    if (document.getElementsByClassName('cbp-spmenu-open').length == 0){
+      classie.remove( body, 'cbp-spmenu-push-toleft' );
+    }
+  }
 
-  $("#btn-report").click(function(){
-    $(".panel-right").hide();
-    $("#report-new").show('slide', {direction: 'right'}, 500);
-  });
+  function show_sign_petition(element){
+    var count = element.id.slice(17);
+    classie.remove( body, 'cbp-spmenu-push-toleft' );
+    classie.add( body, 'cbp-spmenu-push-toleft' );
+    classie.add( document.getElementById('cbp-spmenu-sign-petition'+count), 'cbp-spmenu-open');
+  }
+  function hide_sign_petition(element){
+    var count = element.id.slice(30);
+    classie.remove( document.getElementById('cbp-spmenu-sign-petition'+count), 'cbp-spmenu-open');
+    if (document.getElementsByClassName('cbp-spmenu-open').length == 0){
+      classie.remove( body, 'cbp-spmenu-push-toleft' );
+    }
+  }
 
-    $("#post-options-btn-close").click(function(){
-    $("#post-options").hide();
-    $("#btn-post").show('slide', {direction: 'left'}, 500);
-  });
-
-  $("#menu-options-btn-close").click(function(){
-    $("#menu-options").hide();
-    $("#btn-menu").show('slide', {direction: 'left'}, 500);
-  });
-
-  $("#report-new-btn-close").click(function(){
-    $("#report-new").hide();
-    $("#btn-post").show('slide', {direction: 'right'}, 500);
-  });
-
-  $("#petition-new-btn-close").click(function(){
-    $("#petition-new").hide();
-    $("#btn-post").show('slide', {direction: 'right'}, 500);
-  });
-
-
-  /* INITIALLY HIDE POST INFORMATION */
-  $(".show-post").hide();
-
-});
-
+  function show_petition(element){
+    classie.remove( body, 'cbp-spmenu-push-toleft' );
+    classie.add( body, 'cbp-spmenu-push-toleft' );
+    var count = element.id.slice(17);
+    classie.add( document.getElementById('cbp-spmenu-show-petition'+count), 'cbp-spmenu-open');
+  }
+  function hide_petition(element){
+    var count = element.id.slice(30);
+    classie.remove( document.getElementById('cbp-spmenu-show-petition'+count), 'cbp-spmenu-open');
+    if (document.getElementsByClassName('cbp-spmenu-open').length == 0){
+      classie.remove( body, 'cbp-spmenu-push-toleft' );
+    }
+  }
 </script>

@@ -28,8 +28,7 @@ class PetitionsController < ApplicationController
 
     respond_to do |format|
       if @petition.save
-        format.html { redirect_to @petition, notice: 'Petition was successfully created.' }
-        format.json { render :show, status: :created, location: @petition }
+        format.html { redirect_to posts_path(code: 'pie') }
       else
         format.html { render :new }
         format.json { render json: @petition.errors, status: :unprocessable_entity }
@@ -66,6 +65,6 @@ class PetitionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def petition_params
-      params.require(:petition).permit(:title, :write_up)
+      params.require(:petition).permit(:title, :write_up, :noted)
     end
 end

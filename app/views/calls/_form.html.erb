@@ -1,7 +1,7 @@
 <%= form_for(@call) do |f| %>
   <% if @call.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@call.errors.count, "error") %> prohibited this call from being saved:</h2>
+      <h2><%= pluralize(@call.errors.count, "error") %> prohibited this survey from being saved:</h2>
 
       <ul>
       <% @call.errors.full_messages.each do |message| %>
@@ -12,22 +12,27 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :event %><br>
-    <%= f.text_field :event %>
+    <div style="margin-top: 5vh; font-family: 'Roboto Slab', serif; font-weight:bold; font-size: 35px; color:black;">Event</div>
+    <%= f.text_field :event, :placeholder=>'Type here...', class: 'form-panel', :style=>"margin-top: 2vh;" %>
   </div>
+
   <div class="field">
-    <%= f.label :date %><br>
-    <%= f.text_field :date %>
+    <div style="margin-top: 2vh; font-family: 'Roboto Slab', serif; font-weight:bold; font-size: 35px; line-height: 30px; color:black;">Date</div>
+    <%= f.text_field :date, :placeholder=>'Type here...', class: 'form-panel', :style=>"margin-top: 2vh;" %>
   </div>
+
   <div class="field">
-    <%= f.label :time %><br>
-    <%= f.text_field :time %>
+    <div style="margin-top: 2vh; font-family: 'Roboto Slab', serif; font-weight:bold; font-size: 35px; line-height: 30px; color:black;">Call Time</div>
+    <%= f.text_field :time, :placeholder=>'Type here...', class: 'form-panel', :style=>"margin-top: 2vh;" %>
   </div>
+
   <div class="field">
-    <%= f.label :venue %><br>
-    <%= f.text_field :venue %>
+    <div style="margin-top: 2vh; font-family: 'Roboto Slab', serif; font-weight:bold; font-size: 35px; line-height: 30px; color:black;">Venue</div>
+    <%= f.text_field :venue, :placeholder=>'Type here...', class: 'form-panel', :style=>"margin-top: 2vh;" %>
   </div>
+
   <div class="actions">
-    <%= f.submit 'Post' %>
+    <%= f.submit 'Post', class: 'form-panel form-submit' %>
   </div>
+
 <% end %>

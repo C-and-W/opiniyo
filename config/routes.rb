@@ -20,6 +20,9 @@ Rails.application.routes.draw do
   get '/newsboard' => 'pages#newsboard', as: :newsboard
   get '/about' => 'pages#about', as: :about
   patch '/about' => 'pages#about_edit', as: :about_edit
+
+  ##trial
+  get '/try' => "pages#try", as: :try
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -33,7 +33,7 @@ class ReportsController < ApplicationController
           @tag = Tag.new(name: tag, report_id: @report.id)
           @tag.save
         end
-        format.html { redirect_to posts_path }
+        format.html { redirect_to posts_path(code: 'pie') }
       else
         format.html { render :new }
         format.json { render json: @report.errors, status: :unprocessable_entity }
@@ -57,7 +57,7 @@ class ReportsController < ApplicationController
   def destroy
     @report.destroy
     respond_to do |format|
-      ormat.html { redirect_to posts_path(code: 'pie') }
+      format.html { redirect_to posts_path(code: 'pie') }
       format.json { head :no_content }
     end
   end
@@ -70,6 +70,6 @@ class ReportsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def report_params
-      params.require(:report).permit(:write_up, :name, :age)
+      params.require(:report).permit(:write_up, :name, :age, :photo, :noted)
     end
 end

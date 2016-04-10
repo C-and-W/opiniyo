@@ -27,7 +27,7 @@ Survey.create(write_up: 'Kindly answer the survey by clicking the link below:', 
 Poll.create(information: 'Would you like the barangay to have a sportsfest?', deadline: 'March 22, 2016')
 Choice.create(name: 'Yes', poll_id: 1)
 Choice.create(name: 'No', poll_id: 1)
-Announcement.create(title: 'Warning!', write_up: 'Akyat Bahay break in house at Jose Abad Santos Please stay vigilant and take care! Please contact the barangay for any concerns')
+Announcement.create(write_up: 'Akyat Bahay break in house at Jose Abad Santos Please stay vigilant and take care! Please contact the barangay for any concerns')
 Call.create(event: 'Miting de Avance', date: 'April 1, 2016', time: '4.30PM-6.00PM', venue: 'Barangay Sports Centre')
 
 About.create(write_up: "This project aims to empower the youth of Barangay Little Baguio to participate through submitting their concerns and insights to this website Submissions of this website will be filtered and then forwarded to the barangay heads in the form of a monthly newsletter to officiate the concerns of the youth of Barangay Little Baguio.

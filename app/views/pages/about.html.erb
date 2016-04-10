@@ -1,121 +1,73 @@
-<div class="row">
-  <div class="col-xs-2">
-    <button id="btn-menu">Main Menu</button>
-    <div id="menu-options" class="panel-left">
-      <button id="menu-options-btn-close">X</button>
-      <%= link_to 'Reports', posts_path(code: 'pie'), id: 'btn-reports' %><br>
-      <%= link_to 'Newsboard', newsboard_path, id: 'btn-newsboard' %><br>
-      <%= link_to 'About', about_path, id: 'btn-about' %><br>
-    </div>
-
-  </div>
-  <div class="col-xs-8">
-    REPORTS
-  </div>
-  <div class="col-xs-2">
-    <button id="btn-post">Create Post</button>
-    <div id="post-options" class="panel-right">
-      <button id="post-options-btn-close">X</button>
-      <button id="btn-report">Report</button>
-      <button id="btn-petition">Petition</button>
-    </div>
-    <div id="report-new" class="panel-right">
-      <button id="report-new-btn-close">X</button>
-      <%= render 'reports/form' %>
-    </div>
-    <div id="petition-new" class="panel-right">
-      <button id="petition-new-btn-close">X</button>
-      <%= render 'petitions/form' %>
-    </div>
-  </div>
-</div>
+<style src="assets/stylesheets/slidemenu.css.scss"></style>
+<style src="assets/stylesheets/masonry.css.scss"></style>
 
 
-<div>
+
+
+<body class="cbp-spmenu-push" id="pg-about" style="height: 100vh; overflow-y:auto;">
+  
+  <!-- navbar -->
+  <%= render 'pages/navbar' %>
+
+
+<div style="margin-top: 10vh; border: 10px solid black; width: 85vw; margin-right: 50px; height: 65vh; float:right;" >
   <% if user_signed_in? %>
     <%= form_for(@about, html: {method: "patch"}) do %>
-      <textarea name="write_up"><%= @about.write_up %></textarea>
-      <input type="submit" value="Submit">
+      <textarea name="write_up" class="grid-info" style="resize:none; font-weight: 300; letter-spacing: 0x; height: 63vh; width: 100%; background: transparent; padding:30px; border:none:"><%= @about.write_up %></textarea>
+      <input type="submit" class="form-panel form-submit" style="background:transparent; font-weight: 300;">
     <% end %>
   <% else %>
-    <%= @about.write_up %>
+    <p class="grid-info" style="margin: 0; font-weight:300; letter-spacing: 0px; padding: 30px;"><%= @about.write_up.gsub(/\n/, '<br/>').gsub('Barangay Little Baguio', '<span class="more-highlight">Barangay Little Baguio</span>').html_safe %></p>
   <% end %>
 </div>
 
+</body>
 
+
+<script src="assets/javascripts/classie.js"></script>
 <script>
-function show_petition(element){
-  $(".show-post").hide();
-  var count = element.id.slice(-1);
-  $("#show-petition"+count).show();//('slide', {direction: 'left'}, 500);
-}
+  var hamburgerMenu = document.getElementById( 'cbp-spmenu-hamburger' ),
+      megaphoneMenu = document.getElementById( 'cbp-spmenu-megaphone' ),
+      newReportMenu = document.getElementById('cbp-spmenu-new-report'),
+      newPetitionMenu = document.getElementById('cbp-spmenu-new-petition'),
+      showHamburgerMenu = document.getElementById( 'showHamburgerMenu' ),
+      showMegaphoneMenu = document.getElementById( 'showMegaphoneMenu' ),
+      showNewReportMenu = document.getElementById( 'btn-new-report' ),
+      showNewPetitionMenu = document.getElementById( 'btn-new-petition' ),
+      hideHamburgerMenu = document.getElementById('cbp-spmenu-hamburger-close'),
+      hideMegaphoneMenu = document.getElementById('cbp-spmenu-megaphone-close'),
+      hideNewReportMenu = document.getElementById('cbp-spmenu-new-report-close'),
+      hideNewPetitionMenu = document.getElementById('cbp-spmenu-new-petition-close'),
+      body = document.body;
 
-function sign_petition(e, element){
-  $(".show-post").hide();
-  var count = element.id.slice(-1);
-  $("#sign-petition"+count).show();//('slide', {direction: 'left'}, 500);
-  var event = e || arguments[0] || window.event;
-  event.stopPropagation();
-}
-
-function show_report(element){
-  $(".show-post").hide();
-  var count = element.id.slice(-1);
-  $("#show-report"+count).show();//('slide', {direction: 'left'}, 500);
-}
-
-$(document).ready(function(){
-  // $( "#toggle" ).toggle( "slide" );
-  $(".panel-right").hide();
-  $(".panel-left").hide();
-
-  $("#btn-menu").click(function(){
-    $("#btn-menu").hide();
-    $(".panel-right").hide();
-    $("#btn-post").show('slide', {direction: 'right'}, 500);
-    $("#menu-options").show('slide', {direction: 'left'}, 500);
-  });
-
-  $("#btn-post").click(function(){
-    $("#btn-post").hide();
-    $(".panel-left").hide();
-    $("#btn-menu").show('slide', {direction: 'left'}, 500);
-    $("#post-options").show('slide', {direction: 'right'}, 500);
-  });
-
-  $("#btn-petition").click(function(){
-    $(".panel-right").hide();
-    $("#petition-new").show('slide', {direction: 'right'}, 500);
-  });
-  
-  $("#btn-report").click(function(){
-    $(".panel-right").hide();
-    $("#report-new").show('slide', {direction: 'right'}, 500);
-  });
-
-    $("#post-options-btn-close").click(function(){
-    $("#post-options").hide();
-    $("#btn-post").show('slide', {direction: 'left'}, 500);
-  });
-
-  $("#menu-options-btn-close").click(function(){
-    $("#menu-options").hide();
-    $("#btn-menu").show('slide', {direction: 'left'}, 500);
-  });
-
-  $("#report-new-btn-close").click(function(){
-    $("#report-new").hide();
-    $("#btn-post").show('slide', {direction: 'right'}, 500);
-  });
-
-  $("#petition-new-btn-close").click(function(){
-    $("#petition-new").hide();
-    $("#btn-post").show('slide', {direction: 'right'}, 500);
-  });
-
-  /* INITIALLY HIDE POST INFORMATION */
-  $(".show-post").hide();
-
-});
-
+  showHamburgerMenu.onclick = function() {
+    //classie.toggle( this, 'active' );
+    classie.toggle( body, 'cbp-spmenu-push-toright' );
+    classie.toggle( hamburgerMenu, 'cbp-spmenu-open' );
+  };
+  showMegaphoneMenu.onclick = function() {
+    //classie.toggle( this, 'active' );
+    classie.toggle( body, 'cbp-spmenu-push-toleft' ); //hide/show hamburger
+    classie.toggle( megaphoneMenu, 'cbp-spmenu-open' ); //hide/show right panel
+  };
+  hideHamburgerMenu.onclick = function(){
+    classie.toggle( body, 'cbp-spmenu-push-toright' ); //hide/show megaphone
+    classie.toggle( hamburgerMenu, 'cbp-spmenu-open' ); //hide/show left panel
+  };
+  hideMegaphoneMenu.onclick = function(){
+    classie.toggle( body, 'cbp-spmenu-push-toleft' );
+    classie.toggle( megaphoneMenu, 'cbp-spmenu-open' );
+  };
+  showNewReportMenu.onclick = function(){
+    classie.toggle( newReportMenu, 'cbp-spmenu-open');
+  };
+  hideNewReportMenu.onclick = function(){
+    classie.toggle( newReportMenu, 'cbp-spmenu-open' );
+  };
+  showNewPetitionMenu.onclick = function(){
+    classie.toggle( newPetitionMenu, 'cbp-spmenu-open');
+  };
+  hideNewPetitionMenu.onclick = function(){
+    classie.toggle( newPetitionMenu, 'cbp-spmenu-open' );
+  };
 </script>

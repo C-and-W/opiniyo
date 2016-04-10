@@ -12,21 +12,26 @@
   <% end %>
 
   <div class="field">
-    <%= f.text_area :write_up, :placeholder=>'Type here...', :style=>"resize:none; border: 4px solid black; font-size: 24px; height: 500px;width:275px;" %>
+    <%= f.text_area :write_up, :placeholder=>'Type here...', class: 'form-panel', :style=>"resize:none; height: 500px; padding-top: 30px; padding-right: 30px; margin-top: 2vh;" %>
+    <div style="margin-top: -60px; margin-left: 30px; position:absolute;">
+      <%= image_tag 'attach_image_icon-15.png', style: "background-color: transparent; height: 30px;" %>
+      <span><%= f.file_field :photo, class:'upload', style: "outline: none; margin-top: -20px; margin-left: 50px;" %></span>
+    </div>
   </div>
 
   <div class="field">
-    <input name="tags" type="text" placeholder="Tags (e.g. Traffic,NeverAgain)" style="border: 4px solid black; font-size: 24px; height: 45px;width:275px;">
+    <input name="tags" type="text" placeholder="Tags (e.g. Traffic,Love)" class="form-panel">
   </div>
 
   <div class="field">
-    <%= f.text_field :name, :placeholder=>'Name...', :style=>"border: 4px solid black; font-size: 24px; height: 45px;width:275px;" %>
+    <%= f.text_field :name, :placeholder=>'Name...', class: 'form-panel' %>
   </div>
   <div class="field">
-    <%= f.number_field :age, :placeholder=>'Age...', :style=>"border: 4px solid black; font-size: 24px; height: 45px;width:275px;"%>
+    <%= f.number_field :age, :placeholder=>'Age...', class: 'form-panel' %>
   </div>
 
   <div class="actions">
-    <%= f.submit 'Post', :style=>"border: 4px solid black; font-size: 24px; height: 45px;width:100px;" %>
+    <%= f.submit 'Post', class: 'form-panel form-submit' %>
   </div>
 <% end %>
+

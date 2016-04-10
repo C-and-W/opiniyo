@@ -1,13 +1,18 @@
 class PagesController < ApplicationController
+
+  def try
+  end
+  
   def index
     @message = session[:message]
     session[:message] = nil
   end
 
   def posts
+    @header = "Reports"
     session[:code] = params[:code]
     if session[:code] == "pie"
-      @posts = (Report.all + Petition.all).sort_by(&:created_at)
+      @posts = (Report.all + Petition.all).sort_by(&:created_at).reverse
       if params['query'].present?
         @posts = Report.joins(:tags).merge(Tag.where("lower(tags.name) LIKE lower(?)", "%#{params['query']}%"))
       end
@@ -28,12 +33,14 @@ class PagesController < ApplicationController
   end
 
   def newsboard
+    @header = "Newsboard"
     @news = (Call.all + Survey.all + Announcement.all + Poll.all).sort_by(&:created_at)
     for_posts
     for_newsboard
   end
 
   def about
+    @header = "About"
     @about = About.first
     for_posts
   end
