@@ -113,7 +113,7 @@
         <p class="grid-info" style="margin: 0; margin-top: 20px; font-family: 'Roboto Slab', serif; font-weight:bold; cursor: pointer; cursor: hand;"><span class="call-info newsboard-highlight" id="btn-show-poll<%= news.id %>" onclick="show_poll(this)">Click here to view entire poll</span></p>
         
         <!-- poll menu -->
-        <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right cbp-spmenu-post" id="cbp-spmenu-poll<%= news.id %>">
+        <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right cbp-spmenu-post" id="cbp-spmenu-poll<%= news.id %>" style="visibility:hidden;">
           <button id="cbp-spmenu-poll-close<%= news.id %>" class="btn-close" onclick="hide_poll(this)"><%= image_tag 'exit_button-15.png', style: "background-color:#FCB800; height: 50px;" %></button>
           <div style="margin-top: 11vh; font-family: 'Roboto', sans-serif; font-weight:bold; font-size: 100px; color:black;">POLL</div>
             <div style="margin-top: 10vh; font-family: 'Roboto Slab', serif; font-weight:bold; font-size: 35px; line-height: 30px; color:black;">Information</div>
@@ -286,6 +286,8 @@
     classie.remove( body, 'cbp-spmenu-push-toleft' );
     classie.add( body, 'cbp-spmenu-push-toleft' );
     classie.add( document.getElementById('cbp-spmenu-poll'+count), 'cbp-spmenu-open');
+    document.getElementById('cbp-spmenu-poll'+count).style.visibility = "visible" ;
+
   }
   function hide_poll(element){
     var count = element.id.slice(21);
@@ -293,5 +295,6 @@
     if (document.getElementsByClassName('cbp-spmenu-open').length == 0){
       classie.remove( body, 'cbp-spmenu-push-toleft' );
     }
+    document.getElementById('cbp-spmenu-poll'+count).style.visibility = "hidden" ;
   }
 </script>

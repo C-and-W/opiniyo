@@ -164,7 +164,7 @@
         <% end %>
 
         <!-- show petition menu -->
-        <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right cbp-spmenu-post" id="cbp-spmenu-show-petition<%= post.id %>">
+        <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right cbp-spmenu-post" id="cbp-spmenu-show-petition<%= post.id %>" style="visibility:hidden;">
           <button id="cbp-spmenu-show-petition-close<%= post.id %>" class="btn-close" onclick="hide_petition(this)"><%= image_tag 'exit_button-15.png', style: "background-color:#FCB800; height: 50px;" %></button>
           <div style="margin-top: 11vh; padding: 30px; background-color: #F1F1F2; border: black solid 5px; font-family: 'Roboto Slab', serif;">
             <h1 style="font-weight: bold; font-size: 110px; margin: 0; margin-left: 12px;"><%= post.signatures.count %></h1>
@@ -181,7 +181,7 @@
 
         <!-- sign petition menu -->
 
-        <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right cbp-spmenu-post" id="cbp-spmenu-sign-petition<%= post.id %>">
+        <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right cbp-spmenu-post" id="cbp-spmenu-sign-petition<%= post.id %>" style="visibility:hidden;">
           <button id="cbp-spmenu-sign-petition-close<%= post.id %>" class="btn-close" onclick="hide_sign_petition(this)"><%= image_tag 'exit_button-15.png', style: "background-color:#FCB800; height: 50px;" %></button>
           <div style="margin-top: 11vh; font-family: 'Roboto Slab', serif; font-weight:bold; font-size: 35px; line-height: 35px; color:black;">Sign the<br>Petition</div>
           <% @signature = Signature.new %>
@@ -290,6 +290,7 @@
     classie.remove( body, 'cbp-spmenu-push-toleft' );
     classie.add( body, 'cbp-spmenu-push-toleft' );
     classie.add( document.getElementById('cbp-spmenu-sign-petition'+count), 'cbp-spmenu-open');
+    document.getElementById('cbp-spmenu-sign-petition'+count).style.visibility = "visible" ;
   }
   function hide_sign_petition(element){
     var count = element.id.slice(30);
@@ -297,6 +298,7 @@
     if (document.getElementsByClassName('cbp-spmenu-open').length == 0){
       classie.remove( body, 'cbp-spmenu-push-toleft' );
     }
+    document.getElementById('cbp-spmenu-sign-petition'+count).style.visibility = "hidden" ;
   }
 
   function show_petition(element){
@@ -304,6 +306,7 @@
     classie.add( body, 'cbp-spmenu-push-toleft' );
     var count = element.id.slice(17);
     classie.add( document.getElementById('cbp-spmenu-show-petition'+count), 'cbp-spmenu-open');
+    document.getElementById('cbp-spmenu-show-petition'+count).style.visibility = "visible" ;
   }
   function hide_petition(element){
     var count = element.id.slice(30);
@@ -311,6 +314,7 @@
     if (document.getElementsByClassName('cbp-spmenu-open').length == 0){
       classie.remove( body, 'cbp-spmenu-push-toleft' );
     }
+    document.getElementById('cbp-spmenu-show-petition'+count).style.visibility = "hidden" ;
   }
 
 
