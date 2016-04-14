@@ -1,17 +1,16 @@
-<h2>Log in</h2>
+<body>  
+  <section style="background-color: #FCB800;height:100vh;">
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :username %><br />
-    <%= f.text_field :username, autofocus: true %>
+    <center>
+    <div style="padding-top: 30vh;">
+      <div style="font-family: 'Roboto Slab', serif; font-weight:bold; font-size: 35px; line-height: 30px; color:black; padding-right: 150px;">Login</div>
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <%= f.text_field :username, class: 'form-panel', placeholder: 'Username', style: 'width: 250px; margin-top: 30px;' %><br>
+        <%= f.password_field :password, class: 'form-panel', autocomplete: "off", placeholder: 'Password', style: 'width: 250px; margin-top: 10px;'%><br>
+        <%= f.submit "Log in", class: 'form-panel form-submit', style: 'margin-top: 30px; float: none; margin-left: 120px;' %>
+      <% end %>
+    </center>
   </div>
+  </section>
+</body>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
-  
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-<% end %>

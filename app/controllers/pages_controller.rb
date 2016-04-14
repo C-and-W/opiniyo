@@ -11,7 +11,7 @@ class PagesController < ApplicationController
   def posts
     @header = "Reports"
     session[:code] = params[:code]
-    if session[:code] == "pie"
+    if session[:code] == Code.first.code
       @posts = (Report.all + Petition.all).sort_by(&:created_at).reverse
       if params['query'].present?
         @posts = Report.joins(:tags).merge(Tag.where("lower(tags.name) LIKE lower(?)", "%#{params['query']}%"))
@@ -27,7 +27,7 @@ class PagesController < ApplicationController
       for_posts
       render :posts
     else
-      session[:message] = "Wrong"
+      session[:message] = "Wrong security code"
       redirect_to root_path
     end
   end

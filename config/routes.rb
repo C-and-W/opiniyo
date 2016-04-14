@@ -1,20 +1,21 @@
 Rails.application.routes.draw do
+  resources :codes, only: [:edit, :update]
   devise_for :users, skip: :all
   devise_scope :user do
     get '/sign_in' => 'devise/sessions#new', as: :new_user_session
     post '/sign_in' => 'devise/sessions#create', as: :user_session
     delete '/sign_out' => 'devise/sessions#destroy', as: :destroy_user_session
   end
-  resources :choices
-  resources :polls
-  resources :surveys
-  resources :announcements
-  resources :calls
-  resources :comments
-  resources :signatures
-  resources :petitions
-  resources :tags
-  resources :reports
+  resources :choices, only: [:update]
+  resources :polls, only: [:create, :destroy]
+  resources :surveys, only: [:create, :destroy]
+  resources :announcements, only: [:create, :destroy]
+  resources :calls, only: [:create, :destroy]
+  resources :comments, only: [:create]
+  resources :signatures, only: [:create]
+  resources :petitions, only: [:create, :update, :destroy]
+  resources :tags, only: [:create]
+  resources :reports, only: [:create, :update, :destroy]
   root  'pages#index'
   get '/posts' => 'pages#posts', as: :posts
   get '/newsboard' => 'pages#newsboard', as: :newsboard

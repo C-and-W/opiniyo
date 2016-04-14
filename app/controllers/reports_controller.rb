@@ -1,25 +1,6 @@
 class ReportsController < ApplicationController
-  before_action :set_report, only: [:show, :edit, :update, :destroy]
+  before_action :set_report, only: [:update, :destroy]
 
-  # GET /reports
-  # GET /reports.json
-  def index
-    @reports = Report.all
-  end
-
-  # GET /reports/1
-  # GET /reports/1.json
-  def show
-  end
-
-  # GET /reports/new
-  def new
-    @report = Report.new
-  end
-
-  # GET /reports/1/edit
-  def edit
-  end
 
   # POST /reports
   # POST /reports.json
@@ -33,7 +14,7 @@ class ReportsController < ApplicationController
           @tag = Tag.new(name: tag, report_id: @report.id)
           @tag.save
         end
-        format.html { redirect_to posts_path(code: 'pie') }
+        format.html { redirect_to posts_path(code: Code.first.code) }
       else
         format.html { render :new }
         format.json { render json: @report.errors, status: :unprocessable_entity }
@@ -49,7 +30,7 @@ class ReportsController < ApplicationController
     else
       @report.update(noted: false)
     end
-    redirect_to posts_path(code: 'pie')
+    redirect_to posts_path(code: Code.first.code)
   end
 
   # DELETE /reports/1
@@ -57,7 +38,7 @@ class ReportsController < ApplicationController
   def destroy
     @report.destroy
     respond_to do |format|
-      format.html { redirect_to posts_path(code: 'pie') }
+      format.html { redirect_to posts_path(code: Code.first.code) }
       format.json { head :no_content }
     end
   end

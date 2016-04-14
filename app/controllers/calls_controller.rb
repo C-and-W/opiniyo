@@ -1,25 +1,5 @@
 class CallsController < ApplicationController
-  before_action :set_call, only: [:show, :edit, :update, :destroy]
-
-  # GET /calls
-  # GET /calls.json
-  def index
-    @calls = Call.all
-  end
-
-  # GET /calls/1
-  # GET /calls/1.json
-  def show
-  end
-
-  # GET /calls/new
-  def new
-    @call = Call.new
-  end
-
-  # GET /calls/1/edit
-  def edit
-  end
+  before_action :set_call, only: [:destroy]
 
   # POST /calls
   # POST /calls.json
@@ -31,20 +11,6 @@ class CallsController < ApplicationController
         format.html { redirect_to newsboard_path }
       else
         format.html { render :new }
-        format.json { render json: @call.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /calls/1
-  # PATCH/PUT /calls/1.json
-  def update
-    respond_to do |format|
-      if @call.update(call_params)
-        format.html { redirect_to @call, notice: 'Call was successfully updated.' }
-        format.json { render :show, status: :ok, location: @call }
-      else
-        format.html { render :edit }
         format.json { render json: @call.errors, status: :unprocessable_entity }
       end
     end

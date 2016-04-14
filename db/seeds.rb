@@ -33,3 +33,5 @@ Call.create(event: 'Miting de Avance', date: 'April 1, 2016', time: '4.30PM-6.00
 About.create(write_up: "This project aims to empower the youth of Barangay Little Baguio to participate through submitting their concerns and insights to this website Submissions of this website will be filtered and then forwarded to the barangay heads in the form of a monthly newsletter to officiate the concerns of the youth of Barangay Little Baguio.
 The youth possess a unique perspective as to how they can contribute to their own communities that is unlike their older counterparts. Adolescents nowadays take to the internet and social media as their main medium to voice out not just their political opinions, but also their economic and social stands. This website shall serve as a means for the youth express the changes they want to initiate for them to develop a fuller sense of community.
 For inquiries, please contact [email]")
+
+Code.create(code: 'pie')

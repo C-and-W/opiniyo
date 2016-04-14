@@ -1,25 +1,5 @@
 class PetitionsController < ApplicationController
-  before_action :set_petition, only: [:show, :edit, :update, :destroy]
-
-  # GET /petitions
-  # GET /petitions.json
-  def index
-    @petitions = Petition.all
-  end
-
-  # GET /petitions/1
-  # GET /petitions/1.json
-  def show
-  end
-
-  # GET /petitions/new
-  def new
-    @petition = Petition.new
-  end
-
-  # GET /petitions/1/edit
-  def edit
-  end
+  before_action :set_petition, only: [:update, :destroy]
 
   # POST /petitions
   # POST /petitions.json
@@ -28,7 +8,7 @@ class PetitionsController < ApplicationController
 
     respond_to do |format|
       if @petition.save
-        format.html { redirect_to posts_path(code: 'pie') }
+        format.html { redirect_to posts_path(code: Code.first.code) }
       else
         format.html { render :new }
         format.json { render json: @petition.errors, status: :unprocessable_entity }
@@ -44,7 +24,7 @@ class PetitionsController < ApplicationController
     else
       @petition.update(noted: false)
     end
-    redirect_to posts_path(code: 'pie')
+    redirect_to posts_path(code: Code.first.code)
   end
 
   # DELETE /petitions/1
@@ -52,7 +32,7 @@ class PetitionsController < ApplicationController
   def destroy
     @petition.destroy
     respond_to do |format|
-      format.html { redirect_to posts_path(code: 'pie') }
+      format.html { redirect_to posts_path(code: Code.first.code) }
       format.json { head :no_content }
     end
   end

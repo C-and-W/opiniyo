@@ -2,11 +2,12 @@
   <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-hamburger" style="">
     <button id="cbp-spmenu-hamburger-close" class="btn-close"><%= image_tag 'exit_button-15.png', style: "background-color:#FCB800; height: 50px;" %></button>
       <div>
-      <%= link_to 'Reports', posts_path(code: 'pie'), id: 'btn-reports', class: 'link-panel', style: "margin-top: 11vh;" %><br>
+      <%= link_to 'Reports', posts_path(code: Code.first.code), id: 'btn-reports', class: 'link-panel', style: "margin-top: 11vh;" %><br>
       <%= link_to 'Newsboard', newsboard_path, id: 'btn-newsboard', class: 'link-panel' %><br>
       <%= link_to 'About', about_path, id: 'btn-about', class: 'link-panel' %><br>
       <% if user_signed_in? %>
-        <%= link_to "Sign out", destroy_user_session_path, :method => :delete, class: 'link-panel' %>
+        <%= link_to "Sign out", destroy_user_session_path, :method => :delete, class: 'link-panel' %><br>
+        <%= link_to "Edit code", edit_code_path(Code.first.id), class: 'link-panel' %>
       <% end %>
     </div>
   </nav>
@@ -15,7 +16,7 @@
   <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-megaphone">
     <button id="cbp-spmenu-megaphone-close" class="btn-close"><%= image_tag 'exit_button-15.png', style: "background-color:#FCB800; height: 50px;" %></button>
     <button id="btn-new-report" class='btn-panel' style='margin-top: 11vh;'>Report</button>
-    <button id="btn-new-petition" class='btn-panel' style="margin-top: 2vh;">Petition</button> 
+    <button id="btn-new-petition" class='btn-panel' style='margin-top: 2vh;'>Petition</button>
   </nav>
 
   <!-- new report menu -->
@@ -64,6 +65,6 @@ $(function() {
 #sticky.stick {
     position: fixed;
     top: 0;
-    z-index: 1;
+    z-index: 1001;
 }
 </style>

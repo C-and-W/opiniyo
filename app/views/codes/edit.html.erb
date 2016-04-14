@@ -1,0 +1,15 @@
+<body>  
+  <section style="background-color: #FCB800;height:100vh;">
+
+    <center>
+    <div style="padding-top: 30vh;">
+      <div style="font-family: 'Roboto Slab', serif; font-weight:bold; font-size: 35px; line-height: 30px; color:black; padding-right: 185px;">Edit</div>
+      <%= form_for(@code) do |f| %>
+        <%= f.text_field :code, class: 'form-panel', placeholder: 'Security code', style: 'width: 250px; margin-top: 30px;' %><br>
+        <%= f.submit "Update", class: 'form-panel form-submit', style: 'margin-top: 30px; float: none; margin-left: 120px;' %>
+      <% end %>
+    </center>
+  </div>
+  </section>
+</body>
+

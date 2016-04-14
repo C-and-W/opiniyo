@@ -12,7 +12,9 @@
  *
  *= require_tree .
  *= require_self
+ *= require twitter-bootstrap-static/sprites
  */
+
 
 button{
   outline:none;
@@ -36,23 +38,27 @@ button{
    padding-top: 4px;
    color: black; 
    opacity: 1 !important;
+   font-weight: 100;
 }
 
 .form-panel:-ms-input-placeholder {  
    padding-top: 4px;
    color: black; 
    opacity: 1 !important;
+   font-weight: 100;
 }
 
 .form-panel::-webkit-input-placeholder {
    padding-top: 4px;
    color: black;
    opacity: 1 !important;
+   font-weight: 100;
 }
 
 .form-panel:-moz-placeholder { /* Firefox 18- */
    color: black;
    opacity: 1 !important;
+   font-weight: 100;
 }
 
 #input-code::-moz-placeholder {  /* Firefox 19+ */
@@ -85,9 +91,13 @@ button{
 .btn-panel:link, .btn-panel:hover, .btn-panel:active, .btn-panel:visited,
 .link-panel:link, .link-panel:hover, .link-panel:active, .link-panel:visited{
    color: black;
-   display: block;
    text-decoration: none;
    background-color: #F1F1F2;
+}
+
+.report-container:link, .report-container:hover, .report-container:active, .report-container:visited,
+.link-panel:link, .link-panel:hover, .link-panel:active, .link-panel:visited{
+   display: block;
 }
 
 select:-moz-focusring { 
@@ -139,7 +149,7 @@ select:-moz-focusring {
    padding-left: 30px;
    font-family: 'Roboto Slab', serif; 
    font-size: 18px;
-   font-weight: 100;
+   font-weight: 300;
    background-color: #F1F1F2;
 }
 
@@ -149,6 +159,7 @@ select:-moz-focusring {
    margin-top: 3vh;
    margin-bottom: 2vh; 
    float: right;
+   font-weight: 300;
 }
 .panel{
    padding: 25px 25px 25px 25px; 

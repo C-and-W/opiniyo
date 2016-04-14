@@ -1,9 +1,6 @@
 <style src="assets/stylesheets/slidemenu.css.scss"></style>
 <style src="assets/stylesheets/masonry.css.scss"></style>
 
-
-
-
 <body class="cbp-spmenu-push" id="pg-posts" style="height: 100vh; overflow-y:auto;">
   
   <!-- navbar -->
@@ -12,21 +9,22 @@
   <h1 class="pg-title" style="margin-left: 190px; font-family: 'Roboto', sans-serif; font-weight:bold; font-size: 90px; margin-top: -52px; color:black;">Reports</h1>
 
   <!-- sort posts -->
- <form action="/posts">
-    <%= hidden_field_tag 'code', 'pie' %>
-    <select id="sort" name="sort" onchange="this.form.submit()" class="form-panel" style="background-color:#F1F1F2; width: 250px; border-radius: 0; float:right; margin-top: -25px; margin-right: 40px; font-weight: 300;" >
-      <option value="" selected disabled class="text-hide">Sort posts...</option>
-      <option value="all" class="sort-option" style="border-bottom: 4px solid black; border-left: 4px solid black; border-right: 4px solid black;">All posts</option>
-      <option value="reports" class="sort-option" style="border-bottom: 4px solid black; border-left: 4px solid black; border-right: 4px solid black;">Reports only</option>
-      <option value="petitions" class="sort-option" style="border-bottom: 2px solid black; border-left: 4px solid black; border-right: 4px solid black;">Petitions only</option>
-    </select>
-  </form>
-  <!-- end of sort posts -->
+  <div class="dropdown">
+    <button class="form-panel dropdown-toggle" type="button" data-toggle="dropdown" style="float:right; margin-top: -25px; margin-right: 40px; width: 270px; text-align: left; padding-right: 0; height: 60px; font-size: 24px;">Sort posts ...
+       <%= image_tag 'Dropdown_Arrow-15.png', style: "background-color:#5C676D; height: 20px; padding: 0; margin-left: 50px; position: absolute; margin-top: -1px; z-index: 2;" %>
+<div style="float:right; height: 52px; width: 60px; background-color: #5C676D; position:absolute; margin-left: 172px; margin-top: -35px;"></div>
+    </button>
+    <ul class="dropdown-menu pull-right" style="margin-left: 1022px; margin-right: 40px; width: 270px; border: 5px solid black; border-radius: 0px; margin-top: 30px; background-color: #F1F1F2; font-family: 'Roboto Slab', serif; font-weight: 100; font-size: 24px; padding-left: 0;">
+      <li ><%= link_to 'All posts', posts_path(code: Code.first.code, sort: 'all'), style:"margin: 0; padding:0; font-weight: 300; color:black; padding-left: 30px; border-bottom: 2px solid #5C676D; padding-top: 10px; padding-bottom: 10px;" %></li>
+      <li><%= link_to 'Reports only', posts_path(code: Code.first.code, sort: 'reports'), style:"margin: 0; padding:0; font-weight: 300; color:black; padding-left: 30px; border-bottom: 2px solid #5C676D; padding-top: 10px; padding-bottom: 10px;" %></li>
+      <li><%= link_to 'Petitions only', posts_path(code: Code.first.code, sort: 'petitions'), style:"margin: 0; padding:0; font-weight: 300; color:black; padding-left: 30px; padding-top: 10px; padding-bottom: 10px;" %></a></li>
+    </ul>
+  </div>
 
   <!-- search box -->
   <form action="/posts">
-    <%= hidden_field_tag 'code', 'pie' %>
-    <input name="query" id="input-search" type="text" placeholder="Search tags..." class="form-panel" style="background-color:#F1F1F2; width: 250px; font-weight: 300; float:right; margin-top: -25px; margin-right: 35px;">
+    <%= hidden_field_tag 'code', Code.first.code %>
+    <input name="query" id="input-search" type="text" placeholder="Search tags..." class="form-panel" style="background-color:#F1F1F2; width: 270px; font-weight: 300; float:right; margin-top: -25px; margin-right: 35px; font-size: 24px; height: 60px;">
     <input type="submit" class="hidden">
   </form>
   <!-- end of search box -->
@@ -43,7 +41,7 @@
         <% end %>
         <div style="margin:0; padding:0; cursor: pointer; cursor: hand;" id="btn-report<%= post.id %>" onclick="show_report(this);">
           <% if post.photo.present? %>
-            <center><%= image_tag post.photo.url(:medium)%></center>
+            <center><%= image_tag post.photo.url, style: 'width: 100%;' %></center>
             <p class="grid-info" style="margin-top: 30px;"><%= post.write_up %></p>
           <% else %>
             <p class="grid-info"><%= post.write_up %></p>
@@ -82,7 +80,12 @@
         </div>
         <div style="height: 44vh; overflow-y: auto;">
           <div style="margin: 30px; padding: 30px; background-color: #F1F1F2; border: black solid 5px;">
-            <p class="grid-info"><%= post.write_up %></p>
+            <% if post.photo.present? %>
+              <center><button data-toggle="modal" data-target="#myModal<%= post.id %>" style='margin: 0; padding: 0; outline: none; border:none;'><%= image_tag post.photo.url, style: 'width: 100%' %></button></center>
+              <p class="grid-info" style="margin-top: 30px;"><%= post.write_up %></p>
+            <% else %>
+              <p class="grid-info"><%= post.write_up %></p>
+            <% end %>
             <% post.tags.each do |tag| %>
               <span class="grid-info" style="font-size: 18px;">#<%= tag.name %></span>
             <% end %>
@@ -124,6 +127,13 @@
       </nav>
       <!-- end of show report menu -->
 
+      <!-- zoom photo -->
+      <div class="modal fade" id="myModal<%= post.id %>" role="dialog" style="z-index: 1100; margin-top: 15vh; margin-right: 45vh;">
+        <button id="modal-close<%= post.id %>" class="modal-close" style="background:transparent; outline:none; border:none; font-size: 50px; float:right; color:black;">&times;</button>
+        <center><%= image_tag post.photo.url, style: 'margin:0; padding; 0; height: 75vh; width: auto; max-width: 100%; max-height: 75vh;' %></center>
+      </div>
+      <!-- end of zoom photo -->
+
     <% else %> <!-- petitions -->
       <div class="grid-item" style="border: 5px solid #FCB800;">
         <% if user_signed_in? %> <!-- IF ADMIN -->
@@ -157,7 +167,7 @@
           <button id="cbp-spmenu-show-petition-close<%= post.id %>" class="btn-close" onclick="hide_petition(this)"><%= image_tag 'exit_button-15.png', style: "background-color:#FCB800; height: 50px;" %></button>
           <div style="margin-top: 11vh; padding: 30px; background-color: #F1F1F2; border: black solid 5px; font-family: 'Roboto Slab', serif;">
             <h1 style="font-weight: bold; font-size: 110px; margin: 0; margin-left: 12px;"><%= post.signatures.count %></h1>
-            <h1 style="font-weight: bold;font-size: 36px; margin: 0; margin-top: -15px;"><center>out of <span style="color: #FCB800;">300</center></span></h1>
+            <h1 style="font-weight: bold;font-size: 42px; margin: 0; margin-top: -15px;"><center>out of <span style="color: #FCB800;">300</center></span></h1>
           </div>
           <div style="margin-top: 30px; padding: 30px; background-color: #F1F1F2; border: black solid 5px;">
             <p class="grid-info"><%= post.write_up %></p>
@@ -199,6 +209,8 @@
 </div>
 
 </body>
+
+
 
 <script src="assets/javascripts/masonry.js"></script>
 <script>
@@ -298,4 +310,15 @@
       classie.remove( body, 'cbp-spmenu-push-toleft' );
     }
   }
+
+
+
+$(document).ready(function(){
+  $(".modal-close").click(function(){
+      var count = this.id.slice(11);
+      console.log(count);
+      $("#myModal"+count).modal('toggle');
+  });
+});
+
 </script>
