@@ -30,6 +30,7 @@
   <!-- end of search box -->
 
 
+<div style="padding: 0; width: 100%; margin-left: 210px; position:absolute; ">
 <div class="grid" >
   <% @posts.each do |post| %>
     <% if post.class.name == "Report" %> <!-- IF REPORT -->
@@ -206,6 +207,7 @@
       </div>
     <% end %>
   <% end %>
+</div>
 </div>
 
 </body>
