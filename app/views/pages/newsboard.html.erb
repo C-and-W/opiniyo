@@ -64,7 +64,7 @@
 
 
 
-<div class="grid" style="margin-top: 10vh; margin-left: 230px;" >
+<div class="grid grid-newsboard" style="margin-top: 10vh; margin-left: 230px;" >
   <% @news.each do |news| %>
     <% if news.class.name == "Call" %>
       <div class="grid-item grid-newsboard-item">
@@ -73,8 +73,8 @@
             <%= image_tag "delete_post_button-15.png", style: "height: 50px; margin-top: -95px; margin-left: -65px;", class: "delete-link" %>
           <% end %>
         <% end %>
-        <h1 style="margin: 0; font-family: 'Roboto', sans-serif; font-weight:bold; font-size: 81px;  color:black;">CALL FOR</h1>
-        <h1 style="margin: 0;font-family: 'Roboto', sans-serif; font-weight:bold; font-size: 60px; color:black;">VOLUNTEERS</h1>
+        <h1 style="margin: 0; font-family: 'Roboto', sans-serif; font-weight:bold; font-size: 4.45vw;  color:black;">CALL FOR</h1>
+        <h1 style="margin: 0;font-family: 'Roboto', sans-serif; font-weight:bold; font-size: 3.3vw; color:black;">VOLUNTEERS</h1>
         <p class="grid-info" style="margin: 0; margin-top: 20px;">Event: <span class="call-info newsboard-highlight"><%= news.event %></span></p>
         <p class="grid-info" style="margin: 0;">Date: <span class="call-info newsboard-highlight"><%= news.date %></span></p>
         <p class="grid-info" style="margin: 0;">Time: <span class="call-info newsboard-highlight"><%= news.time %></span></p>
@@ -87,9 +87,9 @@
             <%= image_tag "delete_post_button-15.png", style: "height: 50px; margin-top: -95px; margin-left: -65px;", class: "delete-link" %>
           <% end %>
         <% end %>
-        <h1 style="margin: 0; font-family: 'Roboto', sans-serif; font-weight:bold; font-size: 85px;  color:black;">SURVEY</h1>
+        <h1 style="margin: 0; font-family: 'Roboto', sans-serif; font-weight:bold; font-size: 5vw;  color:black;">SURVEY</h1>
         <p class="grid-info" style="margin: 0; margin-top: 20px;"><%= news.write_up.gsub(/\n/, '<br/>').html_safe %></p>
-        <p class="grid-info" style="margin: 0; margin-top: 20px; font-family: 'Roboto Slab', serif; font-weight:bold;"><span class="call-info newsboard-highlight"><%= news.link %></span></p>
+        <p class="grid-info" style="margin: 0; margin-top: 20px; font-family: 'Roboto Slab', serif; font-weight:bold; word-wrap: break-word;"><span class="call-info newsboard-highlight"><%= news.link %></span></p>
       </div>
     <% elsif news.class.name == "Announcement" %>
       <div class="grid-item grid-newsboard-item">
@@ -98,7 +98,7 @@
             <%= image_tag "delete_post_button-15.png", style: "height: 50px; margin-top: -95px; margin-left: -65px;", class: "delete-link" %>
           <% end %>
         <% end %>
-        <h1 style="margin: 0; font-family: 'Roboto', sans-serif; font-weight:bold; font-size: 48px;  color:black;">ANNOUNCEMENT</h1>
+        <h1 style="margin: 0; font-family: 'Roboto', sans-serif; font-weight:bold; color:black; font-size: 2.5vw;">ANNOUNCEMENT</h1>
         <p class="grid-info" style="margin: 0; margin-top: 20px;"><%= news.write_up.gsub(/\n/, '<br/>').html_safe %></p>
       </div>
     <% else %> <!-- IF POLL -->

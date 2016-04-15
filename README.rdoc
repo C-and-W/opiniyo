@@ -40,3 +40,4 @@ pag note din ng post, pangit yung pag-load pede san ajax?
 pag scinroll pangit, tumatama sa header
 yung file field, plus di nagooverflow hidden ung filename
 pag iniba mo ung size ng browser, part ng grid na nagaadjust yung ibang menus
+accessible ung other pages without password
