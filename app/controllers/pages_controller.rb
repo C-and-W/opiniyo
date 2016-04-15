@@ -34,21 +34,33 @@ class PagesController < ApplicationController
 
   def newsboard
     @header = "Newsboard"
-    @news = (Call.all + Survey.all + Announcement.all + Poll.all).sort_by(&:created_at)
-    for_posts
-    for_newsboard
+    session[:code] = params[:code]
+    if session[:code] == Code.first.code
+      @news = (Call.all + Survey.all + Announcement.all + Poll.all).sort_by(&:created_at)
+      for_posts
+      for_newsboard
+    else
+      session[:message] = "Wrong security code"
+      redirect_to root_path
+    end
   end
 
   def about
     @header = "About"
-    @about = About.first
-    for_posts
+    session[:code] = params[:code]
+    if session[:code] == Code.first.code
+      @about = About.first
+      for_posts
+    else
+      session[:message] = "Wrong security code"
+      redirect_to root_path
+    end
   end
 
   def about_edit
     about = About.first
     about.update(write_up: params['write_up'])
-    redirect_to about_path
+    redirect_to about_path(code: Code.first.code)
   end
 
   def for_posts

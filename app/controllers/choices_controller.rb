@@ -5,7 +5,7 @@ class ChoicesController < ApplicationController
   # PATCH/PUT /choices/1.json
   def update
     @choice.update(votes: @choice.votes + 1)
-    redirect_to newsboard_path
+    redirect_to newsboard_path(code: Code.first.code)
   end
 
   private

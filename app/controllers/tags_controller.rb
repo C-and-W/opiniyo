@@ -5,7 +5,7 @@ class TagsController < ApplicationController
   # PATCH/PUT /tags/1.json
   def update
     @tag.update(votes: @tag.votes + 1)
-    redirect_to newsboard_path
+    redirect_to newsboard_path(code: Code.first.code)
   end
 
   private

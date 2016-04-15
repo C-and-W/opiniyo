@@ -3,8 +3,8 @@
     <button id="cbp-spmenu-hamburger-close" class="btn-close"><%= image_tag 'exit_button-15.png', style: "background-color:#FCB800; height: 50px;" %></button>
       <div>
       <%= link_to 'Reports', posts_path(code: Code.first.code), id: 'btn-reports', class: 'link-panel', style: "margin-top: 11vh;" %><br>
-      <%= link_to 'Newsboard', newsboard_path, id: 'btn-newsboard', class: 'link-panel' %><br>
-      <%= link_to 'About', about_path, id: 'btn-about', class: 'link-panel' %><br>
+      <%= link_to 'Newsboard', newsboard_path(code: Code.first.code), id: 'btn-newsboard', class: 'link-panel' %><br>
+      <%= link_to 'About', about_path(code: Code.first.code), id: 'btn-about', class: 'link-panel' %><br>
       <% if user_signed_in? %>
         <%= link_to "Sign out", destroy_user_session_path, :method => :delete, class: 'link-panel' %><br>
         <%= link_to "Edit code", edit_code_path(Code.first.id), class: 'link-panel' %>

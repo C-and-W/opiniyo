@@ -12,7 +12,7 @@ class PollsController < ApplicationController
           choice = Choice.new(poll_id: @poll.id, name: c['name'])
           choice.save
         end
-        format.html { redirect_to newsboard_path }
+        format.html { redirect_to newsboard_path(code: Code.first.code) }
       else
         format.html { render :new }
         format.json { render json: @poll.errors, status: :unprocessable_entity }
@@ -25,7 +25,7 @@ class PollsController < ApplicationController
   def destroy
     @poll.destroy
     respond_to do |format|
-      format.html { redirect_to newsboard_path }
+      format.html { redirect_to newsboard_path(code: Code.first.code) }
       format.json { head :no_content }
     end
   end

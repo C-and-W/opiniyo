@@ -8,7 +8,7 @@ class AnnouncementsController < ApplicationController
 
     respond_to do |format|
       if @announcement.save
-        format.html { redirect_to newsboard_path }
+        format.html { redirect_to newsboard_path(code: Code.first.code) }
       else
         format.html { render :new }
         format.json { render json: @announcement.errors, status: :unprocessable_entity }
@@ -21,7 +21,7 @@ class AnnouncementsController < ApplicationController
   def destroy
     @announcement.destroy
     respond_to do |format|
-      format.html { redirect_to newsboard_path }
+      format.html { redirect_to newsboard_path(code: Code.first.code) }
       format.json { head :no_content }
     end
   end

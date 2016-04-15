@@ -8,7 +8,7 @@ class CallsController < ApplicationController
 
     respond_to do |format|
       if @call.save
-        format.html { redirect_to newsboard_path }
+        format.html { redirect_to newsboard_path(code: Code.first.code) }
       else
         format.html { render :new }
         format.json { render json: @call.errors, status: :unprocessable_entity }
@@ -21,7 +21,7 @@ class CallsController < ApplicationController
   def destroy
     @call.destroy
     respond_to do |format|
-      format.html { redirect_to newsboard_path }
+      format.html { redirect_to newsboard_path(code: Code.first.code) }
       format.json { head :no_content }
     end
   end
