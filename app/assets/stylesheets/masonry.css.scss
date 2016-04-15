@@ -19,7 +19,8 @@
 
 .grid-item {
   margin-left: 0px;
-  margin-right: 45px;
+  /*margin-right: 45px;*/
+  margin-right: 2.4vw;
   margin-top: 45px;
   /*width: 367px; */
   width: 19.58vw;
@@ -40,208 +41,44 @@
   }
 }
 
-@media screen and (max-width: 1854px) {
-  .grid-posts{
-    padding-left: 2.5vw;
-  }
-  .grid-item {
-    width: 19.44vw;
-  }
-}
-
-@media screen and (max-width: 1847px) {
-  .grid-posts{
-    padding-left: 2.5vw;
-  }
-  .grid-item {
-    width: 19.43vw;
-  }
-}
-
-@media screen and (max-width: 1839px) {
-  .grid-posts{
-    padding-left: 2.5vw;
-  }
-  .grid-item {
-    width: 19.41vw;
-  }
-}
-
-@media screen and (max-width: 1824px) {
-  .grid-posts{
-    padding-left: 2.5vw;
-  }
-  .grid-item {
-    width: 19.4vw;
-  }
-}
-
-@media screen and (max-width: 1818px) {
-  .grid-posts{
-    padding-left: 2.5vw;
-  }
-  .grid-item {
-    width: 19.39vw;
-  }
-}
-
-@media screen and (max-width: 1810px) {
-  .grid-posts{
-    padding-left: 2.9vw;
-  }
-  .grid-item {
-    width: 19.28vw;
-  }
-}
-
-@media screen and (max-width: 1803px) {
-  .grid-posts{
-    padding-left: 2.9vw;
-  }
-  .grid-item {
-    width: 19.26vw;
-  }
-}
-
-@media screen and (max-width: 1789px) {
-  .grid-posts{
-    padding-left: 2.9vw;
-  }
-  .grid-item {
-    width: 19.23vw;
-  }
-}
-
-@media screen and (max-width: 1768px) {
+@media screen and (max-width: 1800px) {
   .grid-posts{
     padding-left: 3.5vw;
   }
   .grid-item {
-    width: 19.05vw;
+    width: 19.2vw;
   }
 }
 
-@media screen and (max-width: 1747px) {
-  .grid-posts{
-    padding-left: 3.5vw;
-  }
-  .grid-item {
-    width: 19.02vw;
-  }
-}
 
-@media screen and (max-width: 1727px) {
+@media screen and (max-width: 1600px) {
   .grid-posts{
-    padding-left: 3.5vw;
-  }
-  .grid-item {
-    width: 19vw;
-  }
-}
-
-@media screen and (max-width: 1714px) {
-  .grid-posts{
-    padding-left: 3.5vw;
-  }
-  .grid-item {
-    width: 18.96vw;
-  }
-}
-
-@media screen and (max-width: 1688px) {
-  .grid-posts{
-    padding-left: 4vw;
+    padding-left: 5vw;
   }
   .grid-item {
     width: 18.8vw;
   }
 }
 
-@media screen and (max-width: 1667px) {
+@media screen and (max-width: 1460px) {
   .grid-posts{
-    padding-left: 4vw;
-  }
-  .grid-item {
-    width: 18.75vw;
-  }
-}
-
-@media screen and (max-width: 1637px) {
-  .grid-posts{
-    padding-left: 4.5vw;
-  }
-  .grid-item {
-    width: 18.6vw;
-  }
-}
-
-@media screen and (max-width: 1622px) {
-  .grid-posts{
-    padding-left: 4.5vw;
-  }
-  .grid-item {
-    width: 18.55vw;
-  }
-}
-
-@media screen and (max-width: 1594px) {
-  .grid-posts{
-    padding-left: 4.5vw;
-  }
-  .grid-item {
-    width: 18.5vw;
-  }
-}
-
-@media screen and (max-width: 1566px) {
-  .grid-posts{
-    padding-left: 4.5vw;
-  }
-  .grid-item {
-    width: 18.45vw;
-  }
-}
-
-
-@media screen and (max-width: 1539px) {
-  .grid-posts{
-    padding-left: 5.3vw;
-  }
-  .grid-item {
-    width: 18.2vw;
-  }
-}
-
-@media screen and (max-width: 1513px) {
-  .grid-posts{
-    padding-left: 5.3vw;
+    padding-left: 7.5vw;
   }
   .grid-item {
     width: 18.1vw;
   }
 }
 
-@media screen and (max-width: 1464px) {
+@media screen and (max-width: 1350px) {
   .grid-posts{
-    padding-left: 6vw;
+    padding-left: 7.5vw;
   }
   .grid-item {
-    width: 17.9vw;
+    width: 18.3vw;
+    margin-right: 2vw;
+    margin-top: 35px;
   }
 }
-
-@media screen and (max-width: 1453px) {
-  .grid-posts{
-    padding-left: 6vw;
-  }
-  .grid-item {
-    width: 17.8vw;
-  }
-}
-
-
-
-
 
 
 .grid-newsboard-item {
