@@ -17,7 +17,7 @@
       <input type="submit" class="form-panel form-submit" style="background:transparent; font-weight: 300;">
     <% end %>
   <% else %>
-    <p class="grid-info" style="margin: 0; font-weight:300; letter-spacing: 0px; padding: 30px;"><%= @about.write_up.gsub(/\n/, '<br/>').gsub('Barangay Little Baguio', '<span class="more-highlight">Barangay Little Baguio</span>').html_safe %></p>
+    <p class="grid-info" style="margin: 0; font-weight:300; letter-spacing: 0px; padding: 30px;"><%= @about.write_up.gsub(/\n/, '<br/>').gsub('Barangay Little Baguio', '<span class="more-highlight">Barangay Little Baguio</span>').gsub('725-4484', '<span class="more-highlight">725-4484</span>').gsub('littlebaguio@rocketmail.com', '<span class="more-highlight">littlebaguio@rocketmail.com</span>').gsub('littlebaguio.sanjuan@gmail.com', '<span class="more-highlight">littlebaguio@rocketmail.com</span>').html_safe %></p>
   <% end %>
 </div>
 
