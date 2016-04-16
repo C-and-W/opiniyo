@@ -301,3 +301,31 @@ select:-moz-focusring {
     -o-transform: translate(0,0);
     transform: translate(0,0);
 }
+
+.star-noted{
+  height: 40px; 
+  outline: none; 
+  position:absolute; 
+  cursor: pointer; 
+  cursor: hand; 
+  bottom: 1vh;
+  right: 0.5vw;
+}
+
+.seal-noted{
+  height: 100px; 
+  opacity: 0.4; 
+  position:absolute; 
+  bottom: 1.5vh;
+  right: 1.5vw;
+}
+
+.star-not-noted{
+  height: 40px; 
+  outline: none; 
+  position:absolute; 
+  cursor: pointer; 
+  cursor: hand; 
+  bottom: 1vh;
+  right: 0.5vw;
+}

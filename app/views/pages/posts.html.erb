@@ -58,16 +58,16 @@
             <% if user_signed_in? %>
               <%= form_for(post, html: {method: "patch"}) do %>
                 <input name="btn-noted" value="false" class="hidden">
-                <input type="image" src="/assets/already_noted_icon-15.png" onclick="event.stopPropagation();" style="height: 40px; outline: none; position:absolute; cursor: pointer; cursor: hand; margin-top: 10px; margin-left: 265px;">
+                <input type="image" src="/assets/already_noted_icon-15.png" onclick="event.stopPropagation();" class="star-noted">
               <% end %>
             <% else %>
-              <img src="/assets/noted_seal_icon-15.png" style="height: 100px; opacity: 0.4; position:absolute; margin-top: -60px; margin-left: 180px;">
+              <img class="seal-noted" src="/assets/noted_seal_icon-15.png">
             <% end %>
           <% else %>
             <% if user_signed_in? %>
               <%= form_for(post, html: {method: "patch"}) do %>
                 <input name="btn-noted" value="true" class="hidden">
-                <input type="image" src="/assets/note_button-15.png" onclick="event.stopPropagation();" style="height: 40px; outline: none; position:absolute; cursor: pointer; cursor: hand; margin-top: 10px; margin-left: 265px;">
+                <input type="image" src="/assets/note_button-15.png" onclick="event.stopPropagation();" class="star-not-noted">
               <% end %>
             <% end %>
           <% end %>
@@ -150,16 +150,16 @@
           <% if user_signed_in? %>
             <%= form_for(post, html: {method: "patch"}) do %>
               <input name="btn-noted" value="false" class="hidden">
-              <input type="image" src="/assets/already_noted_icon-15.png" onclick="event.stopPropagation();" style="height: 40px; outline: none; position:absolute; cursor: pointer; cursor: hand; margin-top: -20px; margin-left: 265px;">
+              <input type="image" src="/assets/already_noted_icon-15.png" onclick="event.stopPropagation();" class="star-noted">
             <% end %>
           <% else %>
-            <img src="/assets/noted_seal_icon-15.png" style="height: 100px; opacity: 0.4; position:absolute; margin-top: 30px; margin-left: 50px;">
+            <img src="/assets/noted_seal_icon-15.png" class="seal-noted">
           <% end %>
         <% else %>
           <% if user_signed_in? %>
             <%= form_for(post, html: {method: "patch"}) do %>
               <input name="btn-noted" value="true" class="hidden">
-              <input type="image" src="/assets/note_button-15.png" onclick="event.stopPropagation();" style="height: 40px; outline: none; position:absolute; cursor: pointer; cursor: hand; margin-top: -20px; margin-left: 265px;">
+              <input type="image" src="/assets/note_button-15.png" onclick="event.stopPropagation();" class="star-not-noted">
             <% end %>
           <% end %>
         <% end %>
