@@ -11,8 +11,8 @@
   <!-- sort posts -->
   <div class="dropdown">
     <button class="form-panel dropdown-toggle" type="button" data-toggle="dropdown" style="float:right; margin-top: -25px; margin-right: 40px; width: 270px; text-align: left; padding-right: 0; height: 60px; font-size: 24px;">Sort posts ...
+    <div style="float:right; height: 2.19em; width: 60px; background-color: #5C676D; position:absolute; right: 43.5px; margin-top: -35px;"></div>
        <%= image_tag 'Dropdown_Arrow-15.png', style: "background-color:#5C676D; height: 20px; padding: 0; margin-left: 50px; position: absolute; margin-top: -1px; z-index: 2;" %>
-<div style="float:right; height: 52px; width: 60px; background-color: #5C676D; position:absolute; margin-left: 172px; margin-top: -35px;"></div>
     </button>
     <ul class="dropdown-menu pull-right" style="margin-left: 1022px; margin-right: 40px; width: 270px; border: 5px solid black; border-radius: 0px; margin-top: 30px; background-color: #F1F1F2; font-family: 'Roboto Slab', serif; font-weight: 100; font-size: 24px; padding-left: 0;">
       <li ><%= link_to 'All posts', posts_path(code: Code.first.code, sort: 'all'), style:"margin: 0; padding:0; font-weight: 300; color:black; padding-left: 30px; border-bottom: 2px solid #5C676D; padding-top: 10px; padding-bottom: 10px;" %></li>
