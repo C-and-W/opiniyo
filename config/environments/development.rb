@@ -40,4 +40,13 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
   #config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   Paperclip.options[:command_path] = "/usr/local/bin/"
+
+  config.paperclip_defaults = {
+    :storage => :s3,
+    :s3_credentials => {
+      :bucket => ENV['opiniyoph'],
+      :access_key_id => ENV['AKIAJRREFI5WWKIMFWZQ'],
+      :secret_access_key => ENV['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']
+    }
+  }
 end
