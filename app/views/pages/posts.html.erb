@@ -71,7 +71,17 @@
               <% end %>
             <% end %>
           <% end %>
-          <span style="font-family: 'Roboto Slab', serif; font-weight:bold; font-size: 32px; line-height: 30px; color:black;"><%= post.name %>, <%= post.age %></span>
+          <span style="font-family: 'Roboto Slab', serif; font-weight:bold; font-size: 32px; line-height: 30px; color:black;">
+            <% if post.name.present? && post.age.present? %>
+              <%= post.name %>, <%= post.age %>
+            <% elsif post.name.present? && !post.age.present? %>
+              <%= post.name %>
+            <% elsif post.age.present? && !post.name.present? %>
+              <%= post.age %>
+            <% else %>
+              <br>
+            <% end %>
+          </span>
         </div>
       </div>
 
